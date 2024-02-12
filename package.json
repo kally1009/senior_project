@@ -1,0 +1,14 @@
+{
+  "name": "mood-tracker",
+  "version": "1.0.0",
+  "description": "Senior Project, mood tracking web app, spring 2024.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kalicia Ashcraft",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
