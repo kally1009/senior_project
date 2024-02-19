@@ -25,7 +25,9 @@ Rest Endpoints
 | createEntry | POST | /entries |
 | createJournal | POST | /journals |
 | saveEditEntries | PUT | /entries/id |
+| saveEditJournal | PUT | /journals/id |
 | deleteEntry | DELETE | /entries/id |
+| deleteEntry | DELETE | /journals/id |
 
 #
 Additional Notes:

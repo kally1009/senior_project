@@ -35,3 +35,16 @@
 
 ### 2/12/24
 * Wrote down database schema (README)
+
+### 2/14/24
+* Setup mongodb database and login
+
+### 2/19/24
+* Connected the database
+* Downloaded rest of dependancies (cors, mongoose)
+* Started writing model.js
+* researched some testing tools for nodejs
+
+
+
+
