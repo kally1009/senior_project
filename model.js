@@ -6,21 +6,6 @@ const dbPassword = process.env.DB_PASSWORD;
 const mongoose = require("mongoose");
 mongoose.connect(`mongodb+srv://${dbUsername}:${dbPassword}@cluster0.7bo4ldm.mongodb.net/?retryWrites=true&w=majority`);
 
-const entrySchema = new mongoose.Schema({
-    date:{
-        type: Date,
-        required: [true, "please pick a date"]
-    },
-    mood:{
-        type: Number,
-        required: [true, "please pick a mood"]
-    },
-    activities:{
-        type:[String]
-    },
-    journal:[journalSchema]
-});
-
 const journalSchema = new mongoose.Schema({
     title:{
         type: String
@@ -35,6 +20,23 @@ const journalSchema = new mongoose.Schema({
     }
 
 });
+
+const entrySchema = new mongoose.Schema({
+    date:{
+        type: String,
+        required: [true, "please pick a date"]
+    },
+    mood:{
+        type: Number,
+        required: [true, "please pick a mood"]
+    },
+    activities:{
+        type:[String]
+    },
+    journal:[journalSchema]
+});
+
+
 
 const savedEntrySchema = new mongoose.Schema({
     //fill this in

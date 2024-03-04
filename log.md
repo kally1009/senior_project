@@ -45,6 +45,19 @@
 * Started writing model.js
 * researched some testing tools for nodejs
 
+### 2/23/24
+* REACTJS Course
+
+### 2/27/24
+* REACTJS Course
+
+### 3/1/24
+* File Setup for React and Testing
+
+### 3/4/24
+* Icons for UI
+* Filled in more backend methods and test cases
+
 
 
 
