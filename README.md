@@ -6,7 +6,7 @@ https://www.figma.com/file/kuSjl1UbBwiUXkxhBDq8kj/Mood-Tracker-Senior-Project-We
 ## Resources
 ###### Entries
 Attributes:
-- date (date MM-DD-YYYY)
+- string (date to string YYYY-MM-DD)
 - Mood (integer)
 - journal (journalSchema)
 - Activity Tag (list of strings)
@@ -31,6 +31,9 @@ Rest Endpoints
 
 #
 Additional Notes:
-- Statistics Page(GET date(s),mood, activity tags from getEntries)
+- Statistics Page(GET date(s), mood, activity tags from getEntries)
 - Calendar Page (GET date and mood from getEntries)
-- If time, want to add user accounts and authentication. 
+- Testing with Jtest and Supertest
+- Front-end Built with Reactjs
+- If time, want to add user accounts and authentication.
+
