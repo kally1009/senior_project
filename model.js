@@ -10,16 +10,17 @@ const journalSchema = new mongoose.Schema({
     title:{
         type: String
     },
-    description:{
+    body:{
         type: String,
-        required: [true, "Please provide a description"]
+        required: [true, "Please provide a body"]
     },
     entry_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Entry"
     }
 
-});
+},
+{timestamps: true});
 
 const entrySchema = new mongoose.Schema({
     date:{
@@ -34,17 +35,43 @@ const entrySchema = new mongoose.Schema({
         type:[String]
     },
     journal:[journalSchema]
-});
+},
+{timestamps: true});
 
 
 
 const savedEntrySchema = new mongoose.Schema({
-    //fill this in
-});
+    date:{
+        type: String,
+        required: [true, "Please pick a date"]
+    },
+    mood:{
+        type: Number,
+        required: [true, "Please pick a mood"]
+    },
+    activities:{
+        type:[String]
+    },
+    journal:[journalSchema]
+},
+{timestamps: true});
 
 const savedJournalSchema = new mongoose.Schema({
-    //fill this in
-});
+    title:{
+        type: String
+    },
+    body:{
+        type: String,
+        required: [true, "Please provide a body"]
+    },
+    entry_id:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Entry"
+    }
+
+},
+{timestamps: true}
+);
 
 const Entry = mongoose.model('Entry',entrySchema);
 const SavedEntry = mongoose.model("SavedEntry", savedEntrySchema);
