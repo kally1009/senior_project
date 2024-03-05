@@ -33,7 +33,6 @@ Rest Endpoints
 Additional Notes:
 - Statistics Page(GET date(s), mood, activity tags from getEntries)
 - Calendar Page (GET date and mood from getEntries)
-- Testing with Jtest and Supertest
-- Front-end Built with Reactjs
+- Testing with Jest and Supertest
 - If time, want to add user accounts and authentication.
 
