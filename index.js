@@ -61,7 +61,7 @@ app.post("/entries",async (req,res)=>{
     })
 });
 
-app.put("/entries:id",(req,res)=>{
+app.put("/entries/:id",(req,res)=>{
     res.setHeader("Content-Type", "application/json");
     console.log("updating entry");
     let updatedEntry = {
@@ -69,43 +69,44 @@ app.put("/entries:id",(req,res)=>{
         mood: req.body.mood,
         activites: req.body.activites
     };
-    Entry.update({_id: req.params.id},{$set: updatedEntry}, function(err, updateOneResponse){
-        if (err){
-            res.status(500).json({
-                error: err,
-                message: "Unable to update the entry"
-            });
-            return;
-        }
-        /*else if (updateOneResponse === 0){
-            res.status(404).send(JSON.stringify({
-                error: "Unable to update entry"
-            }));
-            return;
-        };*/
-        res.status(200).json(updateOneResponse);
-
+    Entry.updateOne({_id: req.params.id},{$set: updatedEntry}).then(()=>{
+        console.log("Updated successfully");
+        res.status(200).json(updatedEntry);
+    }).catch((error)=>{
+        if (error.errors){
+            let errorMessages = {};
+            for(let e in error.errors){
+              errorMessages[e] = error.errors[e].message
+            }
+            res.status(404).json(errorMessages)
+          }else{
+            console.error("Error Occured while creating an mood entry:", error);
+        res.status(500).send("Server error");
+        };
     });
 });
 
-app.delete("/entries:id",(req,res)=>{
+app.delete("/entries/:id",(req,res)=>{ 
     res.setHeader("Content-Type", "application/json");
-    Entry.findByIdAndDelete(req.params.id,(err,entry)=>{
-        if(err){
+    Entry.findByIdAndDelete(req.params.id).then(()=>{
+        console.log("Deleting...")
+        res.status(200);
+    }).catch((error)=>{
+        if(error.errors){
             res.status(500).json({
                 error: err,
                 message: "Cannot Delete Entry"
             });
-        } else if (entry==null){
+        } else{
             console.log("unable to find entry");
             res.status(404);
 
-        }else{
-            res.status(200).json(entry);
         }
     });
 });
 
+
+//update this one to new syntax!
 app.post("/journals",(req,res)=>{
     res.setHeader("Content-Type","application/json");
     console.log("Creating a journal entry");
@@ -135,6 +136,7 @@ app.post("/journals",(req,res)=>{
     );
 });
 
+// Add in delete and put for the journal section.
 
 
 
