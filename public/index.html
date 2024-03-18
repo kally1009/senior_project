@@ -1,13 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    Photo by <a href="https://unsplash.com/@anniespratt?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Annie Spratt</a> on <a href="https://unsplash.com/photos/green-leaf-hX_hf2lPpUU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-    Photo by <a href="https://unsplash.com/@bartzimny?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bart Zimny</a> on <a href="https://unsplash.com/photos/shallow-photography-of-leaves-W5XTTLpk1-I?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-  
-</body>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mod Health</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="app">
+            <!--- This is some basic layout/setup right now. Will fill in. -->
+            <h2>Enter content below</h2>
+            <div class="inputHolder">
+                <div class="textInput">
+                    <input type="text" placeholder="Title" v-model="newContentTitle">
+                </div>
+                <div class="textInput">
+                    <input type="number" placeholder="Price" v-model="newContentPrice">
+                </div>
+                <div class="textInput">
+                    <input type="text" placeholder="Description" v-model="newContentDescription">
+                </div>
+            </div>
+            <button v-on:click="addContent">Submit Content</button>
+            <h3>Everyone's favorite content!</h3>
+            <ul>
+                <li v-for="item in content">
+                    {{item.title}} ${{item.price}}
+                    <br>
+                    {{item.description}}
+                </li>
+            </ul>
+        </div>
+        <footer> <!-- Will need to reference where I got the icons somewhere. Maybe in the footer, or may have a seperate page, etc. Will figure that out. -->
+            Icons by <a href="https://unsplash.com/@anniespratt?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Annie Spratt</a> on <a href="https://unsplash.com/photos/green-leaf-hX_hf2lPpUU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+            Icons by <a href="https://unsplash.com/@bartzimny?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bart Zimny</a> on <a href="https://unsplash.com/photos/shallow-photography-of-leaves-W5XTTLpk1-I?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+        </footer>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="app.js"></script>
+    </body>
 </html>

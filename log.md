@@ -58,6 +58,16 @@
 * Icons for UI
 * Filled in more backend methods and test cases
 
+### 3/6/24
+* Ran into errors with method syntax for mongoose.
+* Fixed GET and POST syntax
+* Decided to do Vuejs on the frontend instead of trying to learn React within the amount of time left. 
 
+### 3/8/24
+* Figured out errors for PUT and DELETE.
+* Fixed PUT method
+
+### 3/13/24
+* Finished updating syntax for DELETE
 
 

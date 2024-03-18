@@ -34,5 +34,6 @@ Additional Notes:
 - Statistics Page(GET date(s), mood, activity tags from getEntries)
 - Calendar Page (GET date and mood from getEntries)
 - Testing with Jest and Supertest
+- Frontend Built with Vuejs
 - If time, want to add user accounts and authentication.
 
