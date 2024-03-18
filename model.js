@@ -31,9 +31,9 @@ const entrySchema = new mongoose.Schema({
         type: Number,
         required: [true, "please pick a mood"]
     },
-    activities:{
-        type:[String]
-    },
+    activities:[{
+        type: String
+    }],
     journal:[journalSchema]
 },
 {timestamps: true});

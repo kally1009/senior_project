@@ -40,7 +40,7 @@ app.post("/entries",async (req,res)=>{
     let createdEntry = new Entry({
         date: req.body.date,
         mood: req.body.mood,
-        activites: req.body.activites,
+        activities: req.body.activities,
         journal: req.body.journal,
 
     });
@@ -90,18 +90,20 @@ app.delete("/entries/:id",(req,res)=>{
     res.setHeader("Content-Type", "application/json");
     Entry.findByIdAndDelete(req.params.id).then(()=>{
         console.log("Deleting...")
-        res.status(200);
+        res.status(200).send("Deleted Successfully");
+        console.log("Deleted")
     }).catch((error)=>{
         if(error.errors){
-            res.status(500).json({
-                error: err,
-                message: "Cannot Delete Entry"
-            });
+            let errorMessages = {};
+            for(let e in error.errors){
+              errorMessages[e] = error.errors[e].message
+            }
+            res.status(404).json(errorMessages);
         } else{
-            console.log("unable to find entry");
-            res.status(404);
+            console.log("Error occured while deleting entry");
+            res.status(500).send("Server Error");
 
-        }
+        };
     });
 });
 
