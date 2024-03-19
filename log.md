@@ -70,4 +70,12 @@
 ### 3/13/24
 * Finished updating syntax for DELETE
 
+### 3/17/24
+* Tested DELETE
+* Fixed saving activities issue
+* Calling python script from nodejs setup.
+* Added in journal PUT and DELETE methods
 
+### 3/18/24
+* Researched rendering options for the graph from stats. There is a vuejs module I could possibly use.
+* Vuejs setup and refreshing on the documentation.

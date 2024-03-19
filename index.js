@@ -2,6 +2,7 @@ const express = require('express');
 const { Entry, SavedEntry } = require('./model');
 const cors = require('cors');
 
+
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -45,7 +46,8 @@ app.post("/entries",async (req,res)=>{
 
     });
     createdEntry.save().then(()=>{
-        res.status(201).send("created");
+        res.status(201);
+        console.log("created entry");
 
     }).catch((error)=>{
         if (error.errors){
@@ -67,7 +69,7 @@ app.put("/entries/:id",(req,res)=>{
     let updatedEntry = {
         date: req.body.date,
         mood: req.body.mood,
-        activites: req.body.activites
+        activities: req.body.activities
     };
     Entry.updateOne({_id: req.params.id},{$set: updatedEntry}).then(()=>{
         console.log("Updated successfully");
@@ -108,7 +110,6 @@ app.delete("/entries/:id",(req,res)=>{
 });
 
 
-//update this one to new syntax!
 app.post("/journals",(req,res)=>{
     res.setHeader("Content-Type","application/json");
     console.log("Creating a journal entry");
@@ -138,8 +139,60 @@ app.post("/journals",(req,res)=>{
     );
 });
 
-// Add in delete and put for the journal section.
+app.put("/journals/:id",(req,res)=>{
+    res.setHeader("Content-Type", "application/json");
+    console.log("updating journal");
+    let updatedEntry = {
+        title: req.body.title,
+        body: req.body.body
+    };
+    Entry.updateOne({_id: req.params.id},{$set: updatedEntry}).then(()=>{
+        console.log("Updated successfully");
+        res.status(200).json(updatedEntry);
+    }).catch((error)=>{
+        if (error.errors){
+            let errorMessages = {};
+            for(let e in error.errors){
+              errorMessages[e] = error.errors[e].message
+            }
+            res.status(404).json(errorMessages)
+          }else{
+            console.error("Error Occured while updating a journal", error);
+        res.status(500).send("Server error");
+        };
+    });
+});
 
+app.delete("/journals/:id",(req,res)=>{ 
+    res.setHeader("Content-Type", "application/json");
+    Entry.findByIdAndDelete(req.params.id).then(()=>{
+        console.log("Deleting...")
+        res.status(200).send("Deleted Successfully");
+        console.log("Deleted")
+    }).catch((error)=>{
+        if(error.errors){
+            let errorMessages = {};
+            for(let e in error.errors){
+              errorMessages[e] = error.errors[e].message
+            }
+            res.status(404).json(errorMessages);
+        } else{
+            console.log("Error occured while deleting journal");
+            res.status(500).send("Server Error");
+
+        };
+    });
+});
+
+app.get("/stats",async (req,res)=>{
+    //put args here to pass to the python script (if need args)
+    const spawn = require("child_process").spawn;
+    const pythonProcess = spawn('python',["./stats/main.py", arg1, arg2]);
+    
+    pythonProcess.stdout.on('data', (data) => {
+        //do stuff here on the returned data
+    });
+})
 
 
 app.listen(port,() =>{

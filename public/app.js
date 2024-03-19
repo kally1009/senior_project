@@ -1,6 +1,7 @@
 // basic setup
+import { createApp } from 'vue'
 
-Vue.createApp({
+const app = createApp({
 
     data: function() {
         return {
@@ -50,4 +51,6 @@ Vue.createApp({
         this.loadContent();
     }
 
-}).mount("#app");
+})
+
+app.mount("#app");

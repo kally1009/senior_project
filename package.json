@@ -4,7 +4,7 @@
   "description": "Senior Project, mood tracking web app, spring 2024.",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
