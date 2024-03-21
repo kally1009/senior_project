@@ -1,34 +1,51 @@
-// basic setup
-import { createApp } from 'vue'
+const url = "localhost:8080"
 
-const app = createApp({
+Vue.createApp({
 
     data: function() {
         return {
-            name: "Name",
-            content: [],
-            newContentTitle: "",
-            newContentPrice: "",
-            newContentDescription: ""
+            page: "home", //home, listed entries, new entry, new activities*, stats pages. Wanted to possibly a calendar (and profile page?)
+            entry_id:"",
+            errors: {},
+            date:"",
+            mood: 0,
+            activities:[],
+            journalings:[],
+            entries:[],
+            activities_list:[
+                "school",
+                "relax",
+                "sport",
+                "movies/tv",
+                "reading",
+                "gaming",
+                "work"
+            ], //need to add the possible activities available (can add in more too!). Make them into different categories???
+            new_date:"",
+            new_mood:0,
+            new_activities:[]
+
+
         };
     },
 
+    // need to add in validation
     methods: {
-        loadContent: function() {
-            fetch("http://localhost:8080/entries").then((res) => {
+        loadEntries: function() {
+            fetch(`${url}/entries`).then((res) => {
                 if (res.status == 200) {
-                    res.json().then((content) => {
-                        this.content = content;
-                        console.log(this.content);
+                    res.json().then((entries) => {
+                        this.entries = entries;
+                        console.log(this.entries);
                     });
                 }
             });
         },
-        addContent: function() {
-            console.log(this.newContentTitle);
-            let data = "title="+encodeURIComponent(this.newContentTitle)+"&price="+encodeURIComponent(this.newContentPrice)+"&description="+encodeURIComponent(this.newContentDescription);
+        addEntry: function() {
+            console.log(this.new_mood);
+            let data = "date="+encodeURIComponent(this.new_date)+"&mood="+encodeURIComponent(this.new_mood)+"&activities="+encodeURIComponent(this.new_activities);
             console.log(data);
-            fetch("http://localhost:8080/entries", {
+            fetch(`${url}/entries`, {
                 method: "POST",
                 body: data,
                 headers:{
@@ -36,19 +53,21 @@ const app = createApp({
                 }
             }).then((res) => {
                 if (res.status == 201 ) {
-                    this.newContentTitle = "";
-                    this.newContentPrice = "";
-                    this.newContentDescription = "";
-                    this.loadContent();
+                    this.new_date = "";
+                    this.new_mood = "";
+                    this.new_activities = [];
+                    this.page = "home";
+                    this.loadEntries();
                 } else {
-                    alert("Woah that didn't work!");
+                    alert("Adding an Entry didn't work."); // maybe change the error handling here...
                 }
             });
-        }
+        },
+        // Add in rest of methods here
     },
     created: function() {
-        console.log("Hello World!");
-        this.loadContent();
+        console.log("Mod Health!");
+        this.loadEntries();
     }
 
 })

@@ -7,34 +7,63 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        
         <div id="app">
-            <!--- This is some basic layout/setup right now. Will fill in. -->
-            <h2>Enter content below</h2>
-            <div class="inputHolder">
-                <div class="textInput">
-                    <input type="text" placeholder="Title" v-model="newContentTitle">
+            <header>
+                <nav>
+
+                </nav>
+            </header>
+            <main>
+                <div v-if='page==="home"'>
+                
                 </div>
-                <div class="textInput">
-                    <input type="number" placeholder="Price" v-model="newContentPrice">
+                <div v-if='page==="newEntry"'>
+                    <h2>Add a New Entry</h2>
+                    <div class="inputHolder">
+                        <div class="textInput">
+                    
+                            <input type="date" id="date1" v-model="new_date">
+                            <label for="date1">Please pick a date</label>
+                        </div>
+                        <div class="textInput">
+                            <input type="radio" id="mood_5" name="mood_rate" value="5" v-model="new_mood">
+                            <label for="mood_5">5 (Awesome)</label>
+                            <input type="radio" id="mood_4" name="mood_rate" value="4" v-model="new_mood">
+                            <label for="mood_4">4 (Good)</label>
+                            <input type="radio" id="mood_3" name="mood_rate" value="3" v-model="new_mood">
+                            <label for="mood_3">3 (Okay)</label>
+                            <input type="radio" id="mood_2" name="mood_rate" value="2" v-model="new_mood">
+                            <label for="mood_2">2 (Not Okay)</label>
+                            <input type="radio" id="mood_1" name="mood_rate" value="1" v-model="new_mood">
+                            <label for="mood_1">1 (Horrible)</label>
+
+                        </div>
+                        <div class="textInput">
+                            <div v-for="activity in activities_list">
+                                <input type="checkbox" id={{activity}} value={{ activity }} v-model="new_activities">
+                                <label for={{activity}}> {{activity}}</label>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <button v-on:click="addEntry">Submit Content</button>
                 </div>
-                <div class="textInput">
-                    <input type="text" placeholder="Description" v-model="newContentDescription">
+                <div v-if="page==='entryList'">
+
                 </div>
-            </div>
-            <button v-on:click="addContent">Submit Content</button>
-            <h3>Everyone's favorite content!</h3>
-            <ul>
-                <li v-for="item in content">
-                    {{item.title}} ${{item.price}}
-                    <br>
-                    {{item.description}}
-                </li>
-            </ul>
+                <div v-if="page==='stats'">
+
+                </div>
+
+            </main>
+
+            <footer> <!-- Will need to reference where I got the icons somewhere. Maybe in the footer, or may have a seperate page, etc. Will figure that out. -->
+                Icons by <a href="https://unsplash.com/@anniespratt?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Annie Spratt</a> on <a href="https://unsplash.com/photos/green-leaf-hX_hf2lPpUU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+                Icons by <a href="https://unsplash.com/@bartzimny?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bart Zimny</a> on <a href="https://unsplash.com/photos/shallow-photography-of-leaves-W5XTTLpk1-I?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+            </footer>
         </div>
-        <footer> <!-- Will need to reference where I got the icons somewhere. Maybe in the footer, or may have a seperate page, etc. Will figure that out. -->
-            Icons by <a href="https://unsplash.com/@anniespratt?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Annie Spratt</a> on <a href="https://unsplash.com/photos/green-leaf-hX_hf2lPpUU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-            Icons by <a href="https://unsplash.com/@bartzimny?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bart Zimny</a> on <a href="https://unsplash.com/photos/shallow-photography-of-leaves-W5XTTLpk1-I?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-        </footer>
+        
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
         <script src="app.js"></script>
     </body>
