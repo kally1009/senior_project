@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mod Health</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.5.11/dist/vuetify.min.css">
     </head>
     <body>
         
@@ -15,8 +16,19 @@
                 </nav>
             </header>
             <main>
-                <div v-if='page==="home"'>
+                <nav>
+                    <div>
+                        <button class="nav-btn" v-on:click = "page='home'">Home</button>
+                        <button class="nav-btn" v-on:click = "page='entries'">Entries</button>
+                        <button class="nav-btn" v-on:click = "page='newEntry'">New Entry</button>
+                        <button class="nav-btn" v-on:click = "page='stats'">Stats</button>
+                    </div>
+                </nav>
                 
+                <div v-if='page==="home"'>
+                    <h2>This is the home page</h2>
+                    
+                    
                 </div>
                 <div v-if='page==="newEntry"'>
                     <h2>Add a New Entry</h2>
@@ -39,20 +51,23 @@
                             <label for="mood_1">1 (Horrible)</label>
 
                         </div>
-                        <div class="textInput">
-                            <div v-for="activity in activities_list">
-                                <input type="checkbox" id={{activity}} value={{ activity }} v-model="new_activities">
-                                <label for={{activity}}> {{activity}}</label>
+                        <!--- <div class="textInput">
+                            <div > 
+                                <input v-for="activity in activities_list" 
+                                type="checkbox" id={{activity}} value={{ activity }} v-model="new_activities">
+                                <label v-for="activity in activities_list" for={{activity}}> {{activity}}</label>
                             </div>
+                            Checked Activities: {{ new_activities }}
                             
                         </div>
-                    </div>
+                    </div> --->
                     <button v-on:click="addEntry">Submit Content</button>
                 </div>
-                <div v-if="page==='entryList'">
-
+                <div v-if="page==='entries'">
+                    <h2>This is the entry list page</h2>
                 </div>
                 <div v-if="page==='stats'">
+                    <h2>This is the stats page</h2>
 
                 </div>
 
@@ -65,6 +80,7 @@
         </div>
         
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@3.5.11/dist/vuetify.min.js"></script>
         <script src="app.js"></script>
     </body>
 </html>

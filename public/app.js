@@ -1,4 +1,6 @@
-const url = "localhost:8080"
+const url = "http://localhost:8080"
+
+Vuetify.createVuetify()
 
 Vue.createApp({
 
@@ -43,7 +45,7 @@ Vue.createApp({
         },
         addEntry: function() {
             console.log(this.new_mood);
-            let data = "date="+encodeURIComponent(this.new_date)+"&mood="+encodeURIComponent(this.new_mood)+"&activities="+encodeURIComponent(this.new_activities);
+            let data = "date="+encodeURIComponent(this.new_date)+"&mood="+encodeURIComponent(this.new_mood)+"&activities="+encodeURIComponent(this.new_activities)+"&journals=''";
             console.log(data);
             fetch(`${url}/entries`, {
                 method: "POST",
@@ -70,6 +72,4 @@ Vue.createApp({
         this.loadEntries();
     }
 
-})
-
-app.mount("#app");
+}).use(Vuetify).mount("#app");
