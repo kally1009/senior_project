@@ -19,15 +19,22 @@
                 <nav>
                     <div>
                         <button class="nav-btn" v-on:click = "page='home'">Home</button>
-                        <button class="nav-btn" v-on:click = "page='entries'">Entries</button>
+                        <br>
                         <button class="nav-btn" v-on:click = "page='newEntry'">New Entry</button>
+                        <br>
                         <button class="nav-btn" v-on:click = "page='stats'">Stats</button>
                     </div>
                 </nav>
                 
                 <div v-if='page==="home"'>
                     <h2>This is the home page</h2>
-                    
+                    <ul>
+                        <li v-for="entry in entries ">
+                            {{entry.date}} Mood: {{entry.mood}}
+                            <br>
+                            {{entry.activities}}
+                        </li>
+                    </ul>
                     
                 </div>
                 <div v-if='page==="newEntry"'>
@@ -62,9 +69,6 @@
                         </div>
                     </div> --->
                     <button v-on:click="addEntry">Submit Content</button>
-                </div>
-                <div v-if="page==='entries'">
-                    <h2>This is the entry list page</h2>
                 </div>
                 <div v-if="page==='stats'">
                     <h2>This is the stats page</h2>

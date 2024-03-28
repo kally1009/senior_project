@@ -22,10 +22,12 @@ Vue.createApp({
                 "reading",
                 "gaming",
                 "work"
-            ], //need to add the possible activities available (can add in more too!). Make them into different categories???
+            ], 
+            new_activity:"",
             new_date:"",
             new_mood:0,
-            new_activities:[]
+            new_activities:[],
+            new_journal:"",
 
 
         };
@@ -44,24 +46,36 @@ Vue.createApp({
             });
         },
         addEntry: function() {
+            let new_entry = {
+                date: this.new_date,
+                mood: this.new_mood,
+                activities: this.new_activities,
+                journals:[]
+            };
+
             console.log(this.new_mood);
-            let data = "date="+encodeURIComponent(this.new_date)+"&mood="+encodeURIComponent(this.new_mood)+"&activities="+encodeURIComponent(this.new_activities)+"&journals=''";
-            console.log(data);
+            //let data = "date="+encodeURIComponent(this.new_date)+"&mood="+encodeURIComponent(this.new_mood)+"&activities="+encodeURIComponent(this.new_activities)+"&journals=''";
+            //console.log(data);
             fetch(`${url}/entries`, {
                 method: "POST",
-                body: data,
                 headers:{
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(new_entry),
+                
             }).then((res) => {
-                if (res.status == 201 ) {
+                console.log(new_entry);
+                if(res.status==422){
+                    response.json().then(function(data){
+                        console.log(data)
+                    })
+                }
+                else if (res.status == 201 ) {
                     this.new_date = "";
                     this.new_mood = "";
                     this.new_activities = [];
                     this.page = "home";
                     this.loadEntries();
-                } else {
-                    alert("Adding an Entry didn't work."); // maybe change the error handling here...
                 }
             });
         },
