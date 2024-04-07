@@ -1,11 +1,55 @@
+@font-face {
+    font-family: interFont;
+    src: url(assets/inter-font/Inter-VariableFont_slnt\,wght.ttf);
+  }
+
 .wrapper {
     margin: 0 auto;
-    width: 1092px;
+    width: 80%;
 }
 
 body {
-    margin-left: 0;
-    margin-right: 0;
+    margin: 0px;
+    padding: 0px;
 
 }
 
+nav {
+    background-color: #D3D7DC;
+    
+}
+
+.main-nav{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    justify-content: center;
+}
+.nav-btn{
+    margin: 10px;
+    border: none;
+    background-color: #D3D7DC;
+    padding: 10px;
+    font-size: 15px;
+    font-family: interFont;
+    
+
+}
+
+.nav-btn:hover {
+    transition-delay:1ms;
+    background-color: lightgray;
+}
+
+.nav-style {
+    display: flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    justify-content: space-between;
+    padding: 5px;
+
+}
+
+.nav-signin{
+    padding-top:15px;
+}

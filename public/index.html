@@ -5,27 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mod Health</title>
         <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3.5.11/dist/vuetify.min.css">
     </head>
     <body>
         
         <div id="app">
+            
             <header>
                 <nav>
+                    <div class="wrapper">
+                    <div class="nav-style">
+                    <div class="nav-logo">
+                        <img src="assets/ModHealth-modified.png" width="80">
+                    </div>
+                    <div class="main-nav">
+                        <button class="nav-btn" v-on:click = "page='home'">Home</button>
+                        
+                        <button class="nav-btn" v-on:click = "page='newEntry'">Check-In</button>
+                        
+                        <button class="nav-btn" v-on:click = "page='stats'">Statistics</button>
 
+                        <button class="nav-btn" v-on:click = "page ='calendar'">Calendar</button>
+                    </div>
+                    <div class="nav-signin">
+                        <img src="assets/icons8-male-user-material-filled/icons8-male-user-48.png" width="48">
+                    </div>
+                </div>
+            </div>
                 </nav>
             </header>
-            <main>
-                <nav>
-                    <div>
-                        <button class="nav-btn" v-on:click = "page='home'">Home</button>
-                        <br>
-                        <button class="nav-btn" v-on:click = "page='newEntry'">New Entry</button>
-                        <br>
-                        <button class="nav-btn" v-on:click = "page='stats'">Stats</button>
-                    </div>
-                </nav>
-                
+            <main class="wrapper">
                 <div v-if='page==="home"'>
                     <h2>This is the home page</h2>
                     <ul>
@@ -58,16 +66,15 @@
                             <label for="mood_1">1 (Horrible)</label>
 
                         </div>
-                        <!--- <div class="textInput">
-                            <div > 
-                                <input v-for="activity in activities_list" 
-                                type="checkbox" id={{activity}} value={{ activity }} v-model="new_activities">
-                                <label v-for="activity in activities_list" for={{activity}}> {{activity}}</label>
+                        <div class="textInput">
+                            <div  v-for="activity in activities_list"> 
+                               
+                                <label><input type="checkbox" name="activity" :value="activity" v-model="new_activities"> {{activity}}</label>
                             </div>
                             Checked Activities: {{ new_activities }}
                             
                         </div>
-                    </div> --->
+                    </div>
                     <button v-on:click="addEntry">Submit Content</button>
                 </div>
                 <div v-if="page==='stats'">
@@ -77,14 +84,13 @@
 
             </main>
 
-            <footer> <!-- Will need to reference where I got the icons somewhere. Maybe in the footer, or may have a seperate page, etc. Will figure that out. -->
+            <footer class="wrapper"> <!-- Will need to reference where I got the icons somewhere. Maybe in the footer, or may have a seperate page, etc. Will figure that out. -->
                 Icons by <a href="https://unsplash.com/@anniespratt?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Annie Spratt</a> on <a href="https://unsplash.com/photos/green-leaf-hX_hf2lPpUU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
                 Icons by <a href="https://unsplash.com/@bartzimny?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bart Zimny</a> on <a href="https://unsplash.com/photos/shallow-photography-of-leaves-W5XTTLpk1-I?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
             </footer>
         </div>
         
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vuetify@3.5.11/dist/vuetify.min.js"></script>
         <script src="app.js"></script>
     </body>
 </html>

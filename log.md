@@ -79,3 +79,28 @@
 ### 3/18/24
 * Researched rendering options for the graph from stats. There is a vuejs module I could possibly use.
 * Vuejs setup and refreshing on the documentation.
+
+###
+* Filled in vuejs data and some methods
+* Put in a little bit of HTML structure
+
+
+### 3/25/24
+* More HTML structure
+* Started testing frontend to backend connectivity
+* Tried to fix bugs with POST from frontend to backend
+* Got vuetify imports
+
+### 3/27/24
+* Fixed bugs with POST
+
+### 3/28-31/24
+* Tried to get vuetify working
+* Got v-for checklist working
+* GET and other methods work
+
+### 4/2/24
+* Decided not to do Vuetify since I couldn't get it to connect right. 
+
+### 4/6/24
+* Filled in CSS for Navigation bar

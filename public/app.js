@@ -1,12 +1,10 @@
 const url = "http://localhost:8080"
 
-Vuetify.createVuetify()
-
 Vue.createApp({
 
     data: function() {
         return {
-            page: "home", //home, listed entries, new entry, new activities*, stats pages. Wanted to possibly a calendar (and profile page?)
+            page: "home", //home (listed entries), update , newEntry, stats
             entry_id:"",
             errors: {},
             date:"",
@@ -27,7 +25,9 @@ Vue.createApp({
             new_date:"",
             new_mood:0,
             new_activities:[],
-            new_journal:"",
+            journal_description:"",
+            title:"",
+
 
 
         };
@@ -35,17 +35,40 @@ Vue.createApp({
 
     // need to add in validation
     methods: {
+
+        validateEntries: function(){
+            this.errors = {};
+            if(this.new_mood<=0){
+                this.errors.title = "Please pick a mood"
+                console.log("No Mood Selected");
+
+            }
+            if(this.new_date.length==0 || this.new_date>Date() ){ 
+                this.errors.author = "Please Specify a date"
+                console.log("No date picked");
+            }
+            else {
+                return this.newEntryIsValid;
+            }
+        },
+
         loadEntries: function() {
             fetch(`${url}/entries`).then((res) => {
                 if (res.status == 200) {
                     res.json().then((entries) => {
                         this.entries = entries;
+                        this.entries.reverse();
                         console.log(this.entries);
                     });
                 }
             });
         },
         addEntry: function() {
+
+            if(!this.validateEntries()){
+                console.log("Not Valid Entry");
+                return;
+            }
             let new_entry = {
                 date: this.new_date,
                 mood: this.new_mood,
@@ -54,8 +77,9 @@ Vue.createApp({
             };
 
             console.log(this.new_mood);
-            //let data = "date="+encodeURIComponent(this.new_date)+"&mood="+encodeURIComponent(this.new_mood)+"&activities="+encodeURIComponent(this.new_activities)+"&journals=''";
-            //console.log(data);
+            console.log(this.new_activities);
+            console.log(this.new_date);
+    
             fetch(`${url}/entries`, {
                 method: "POST",
                 headers:{
@@ -74,16 +98,103 @@ Vue.createApp({
                     this.new_date = "";
                     this.new_mood = "";
                     this.new_activities = [];
-                    this.page = "home";
                     this.loadEntries();
+                    this.page = "home";
                 }
             });
         },
-        // Add in rest of methods here
+        deleteEntry: function(id){
+            fetch(`${url}/entries/`+id, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(function(){
+                this.loadEntries();
+            });
+        },
+
+        saveEditEntry: function(){
+            var updated_body = {
+                _id:this.entry_id,
+                date: this.date,
+                mood: this.mood,
+                activities: this.activities,
+
+            };
+            fetch(`${url}/entries/`+this.entry_id, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+
+                },
+                body:JSON.stringify(updated_body)
+
+            }).then(function(response){
+                console.log(updated_body)
+                if(response.status==404){
+                    response.json().then(function(data){
+                        alert(data.msg) //put something else here eventually
+                    })
+                }else if(response.status == 200){
+                    this.date=""
+                    this.new_mood = 0;
+                    this.activities = [],
+                    this.page="home",
+                    this.loadEntries()
+                    
+                }
+            });
+        },
+        editEntry: function(entry){
+            this.date = entry.date
+            this.mood = entry.mood
+            this.activities = entry.activities
+            this.entry_id = entry.entry_id
+            this.page="update"
+    },
+        getJournals: function(entry_id){
+            fetch(`${url}/entries/${entry_id}`).then(function(response){
+                response.json().then(function(data){
+                    console.log(data);
+                    this.journalings = data;
+                })
+            }).then(function(){
+                this.page="entry"
+            })
+        },
+
+        createJournal: function(entry_id){
+            var new_journal = {
+                entry_id: entry_id,
+                title: this.title,
+                body:this.journal_description,
+            }
+            fetch(`${url}/journals`,{
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify(new_journal)
+            }).then(function(response){
+                console.log(new_journal)
+                if(response.status==404){
+                    response.json().then(function(data){
+                        alert(data.msg) //put something else here eventually
+                    })
+                }else if(response.status == 201){
+                    this.title="";
+                    this.journal_description="";
+                    this.getJournals(entry_id);
+                }
+            });
+        },
+
+
     },
     created: function() {
         console.log("Mod Health!");
         this.loadEntries();
     }
 
-}).use(Vuetify).mount("#app");
+}).mount("#app");
