@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mod Health</title>
         <link rel="stylesheet" href="style.css">
+
     </head>
     <body>
         
@@ -15,8 +16,9 @@
                     <div class="wrapper">
                     <div class="nav-style">
                     <div class="nav-logo">
-                        <img src="assets/ModHealth-modified.png" width="80">
+                        <img src="assets/ModHealthLeaf.png" width="80">
                     </div>
+                    <div class="nav-section">
                     <div class="main-nav">
                         <button class="nav-btn" v-on:click = "page='home'">Home</button>
                         
@@ -27,7 +29,8 @@
                         <button class="nav-btn" v-on:click = "page ='calendar'">Calendar</button>
                     </div>
                     <div class="nav-signin">
-                        <img src="assets/icons8-male-user-material-filled/icons8-male-user-48.png" width="48">
+                        <img src="assets/user-profile-filled-svgrepo-com.svg" width="48">
+                    </div>
                     </div>
                 </div>
             </div>
@@ -35,7 +38,11 @@
             </header>
             <main class="wrapper">
                 <div v-if='page==="home"'>
-                    <h2>This is the home page</h2>
+                    <div class="center">
+                        <img src="assets/ModHealthLogo.png" width="400">
+                    </div>
+                    <div class="center"><button id="cta-btn" v-on:click = "page='newEntry'">Check-In</button></div>
+                    
                     <ul>
                         <li v-for="entry in entries ">
                             {{entry.date}} Mood: {{entry.mood}}

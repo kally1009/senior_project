@@ -19,6 +19,13 @@ nav {
     
 }
 
+.nav-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    justify-content: left;
+
+}
 .main-nav{
     display:flex;
     flex-direction: row;
@@ -51,5 +58,22 @@ nav {
 }
 
 .nav-signin{
-    padding-top:15px;
+    padding-top:10px;
+}
+
+.center {
+    display:flex;
+    justify-content: center;
+
+}
+
+#cta-btn {
+    background-color: #25995C;
+    margin: 10px;
+    border: none;
+    padding: 10px 40px;
+    font-size: 15px;
+    font-family: interFont;
+    color: white;
+    border-radius: 10px;
 }
