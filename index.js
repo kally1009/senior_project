@@ -46,7 +46,7 @@ app.post("/entries",async (req,res)=>{
 
     });
     createdEntry.save().then(()=>{
-        res.status(201);
+        res.status(201).send("created");
         console.log("created entry");
 
     }).catch((error)=>{

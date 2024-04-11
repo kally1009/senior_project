@@ -104,3 +104,21 @@
 
 ### 4/6/24
 * Filled in CSS for Navigation bar
+
+### 4/8/24
+* Tried to see if I could connect vuetify again. Did not work. 
+* Worked on the home page, specifically the navigation bar. 
+* Edited the logo in photoshop
+* Made another version of the logo in photoshop
+
+### 4/9/24 
+* Worked on Home page listing the entries
+* Figured out how to dynamically show the mood associated with an image.
+* Fixed a server error with POST not sending a status to the client.
+* Cropped the logo image to better fit and format to the page.
+* Corrected ordering of entries
+
+
+### 4/11/24
+* More CSS
+* Sketched out ideas for CSS on other web pages

@@ -41,14 +41,16 @@ Vue.createApp({
             if(this.new_mood<=0){
                 this.errors.title = "Please pick a mood"
                 console.log("No Mood Selected");
+                return false;
 
             }
             if(this.new_date.length==0 || this.new_date>Date() ){ 
                 this.errors.author = "Please Specify a date"
                 console.log("No date picked");
+                return false;
             }
             else {
-                return this.newEntryIsValid;
+                return true;
             }
         },
 
@@ -57,7 +59,8 @@ Vue.createApp({
                 if (res.status == 200) {
                     res.json().then((entries) => {
                         this.entries = entries;
-                        this.entries.reverse();
+                        this.entries.sort(
+                            (d1,d2) => (d1.date < d2.date) ? 1: (d1.date > d2.date) ? -1: 0);
                         console.log(this.entries);
                     });
                 }
@@ -89,6 +92,7 @@ Vue.createApp({
                 
             }).then((res) => {
                 console.log(new_entry);
+                console.log(res.status);
                 if(res.status==422){
                     response.json().then(function(data){
                         console.log(data)

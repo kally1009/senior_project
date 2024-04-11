@@ -16,9 +16,9 @@
                     <div class="wrapper">
                     <div class="nav-style">
                     <div class="nav-logo">
-                        <img src="assets/ModHealthLeaf.png" width="80">
+                        <img src="assets/ModHealthLeaf.png" width="65">
                     </div>
-                    <div class="nav-section">
+                    
                     <div class="main-nav">
                         <button class="nav-btn" v-on:click = "page='home'">Home</button>
                         
@@ -31,7 +31,7 @@
                     <div class="nav-signin">
                         <img src="assets/user-profile-filled-svgrepo-com.svg" width="48">
                     </div>
-                    </div>
+                    
                 </div>
             </div>
                 </nav>
@@ -39,15 +39,49 @@
             <main class="wrapper">
                 <div v-if='page==="home"'>
                     <div class="center">
-                        <img src="assets/ModHealthLogo.png" width="400">
+                        <img class="extra-top-padding" src="assets/ModHealthLogocropped.png" width="400">
                     </div>
                     <div class="center"><button id="cta-btn" v-on:click = "page='newEntry'">Check-In</button></div>
                     
                     <ul>
-                        <li v-for="entry in entries ">
-                            {{entry.date}} Mood: {{entry.mood}}
-                            <br>
-                            {{entry.activities}}
+                        <li v-for="entry in entries " class="entry-li-style">
+                            <div class="entry-style">
+                                <div class="entry-flex">
+                                    <div>
+                                        <div class="mood-icon-display">
+                                            <img v-if=entry.mood===5 src="assets/mood-icons/icons8-happy-48.png">
+                                            <img v-if=entry.mood===4 src="assets/mood-icons/icons8-smile-48.png">
+                                            <img v-if=entry.mood===3 src="assets/mood-icons/icons8-boring-48.png">
+                                            <img v-if=entry.mood===2 src="assets/mood-icons/icons8-sad-48.png">
+                                            <img v-if=entry.mood===1 src="assets/mood-icons/icons8-angry-48.png">
+                                        </div>
+                                        <div>
+                                            Mood: {{entry.mood}}/5
+                                        </div>
+
+                                    </div>
+                               
+                                    <div class="entry-info">
+                                        {{entry.date}}
+                                        <br>
+                                        <div>
+                                            <ul class="entry-activity-list"> Activities:
+                                                <li v-for="activity in entry.activities" class="entry-activity-list-li">
+                                                    {{activity}}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div v-if="entry.journal.length>0">
+                                            {{entry.journal}}
+                                        </div>
+                                    </div>
+                                    <div class="entry-edit">
+                                        <img src="assets/icons8-edit-material-outlined/icons8-edit-24.png">
+                                        <img src="assets/icons8-delete-trash-material-outlined/icons8-delete-trash-24.png">
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </li>
                     </ul>
                     
