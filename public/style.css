@@ -88,7 +88,6 @@ nav {
 }
 
 .entry-li-style {
-    text-decoration: none;
     list-style:none;
 }
 
@@ -121,4 +120,8 @@ nav {
 .entry-activity-list-li {
     display:inline;
     padding-left: 5px;
+}
+
+.activity-list {
+    display: inline-block;
 }

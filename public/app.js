@@ -25,6 +25,7 @@ Vue.createApp({
             new_date:"",
             new_mood:0,
             new_activities:[],
+            new_journal:"",
             journal_description:"",
             title:"",
 
@@ -35,6 +36,10 @@ Vue.createApp({
 
     // need to add in validation
     methods: {
+
+        addActivity: function(){
+            activities_list.push(new_activity); //maybe add an option to save even on server restart??
+        },
 
         validateEntries: function(){
             this.errors = {};
@@ -113,7 +118,7 @@ Vue.createApp({
                 headers: {
                     "Content-Type": "application/json"
                 }
-            }).then(function(){
+            }).then((res)=>{
                 this.loadEntries();
             });
         },
@@ -155,7 +160,7 @@ Vue.createApp({
             this.mood = entry.mood
             this.activities = entry.activities
             this.entry_id = entry.entry_id
-            this.page="update"
+            this.page="updateEntry"
     },
         getJournals: function(entry_id){
             fetch(`${url}/entries/${entry_id}`).then(function(response){

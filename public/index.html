@@ -64,10 +64,12 @@
                                     <div class="entry-info">
                                         {{entry.date}}
                                         <br>
-                                        <div>
+                                        <div v-if="entry.activities.length>0">
                                             <ul class="entry-activity-list"> Activities:
-                                                <li v-for="activity in entry.activities" class="entry-activity-list-li">
-                                                    {{activity}}
+                                                <li v-for="(activity,index) in entry.activities" class="entry-activity-list-li">
+                                                    
+                                                    <div v-if="index == entry.activities.length -1" class="activity-list">{{activity}}.</div>
+                                                    <div v-else class="activity-list">{{activity}},</div>
                                                 </li>
                                             </ul>
                                         </div>
@@ -76,8 +78,8 @@
                                         </div>
                                     </div>
                                     <div class="entry-edit">
-                                        <img src="assets/icons8-edit-material-outlined/icons8-edit-24.png">
-                                        <img src="assets/icons8-delete-trash-material-outlined/icons8-delete-trash-24.png">
+                                        <img src="assets/icons8-edit-material-outlined/icons8-edit-24.png" v-on:click="editEntry(entry)">
+                                        <img src="assets/icons8-delete-trash-material-outlined/icons8-delete-trash-24.png" v-on:click="deleteEntry(entry._id)">
                                     </div>
                                 </div>
                             </div>
@@ -87,14 +89,18 @@
                     
                 </div>
                 <div v-if='page==="newEntry"'>
-                    <h2>Add a New Entry</h2>
+                    <h2>Check-In</h2>
                     <div class="inputHolder">
                         <div class="textInput">
-                    
-                            <input type="date" id="date1" v-model="new_date">
-                            <label for="date1">Please pick a date</label>
+                            
+                            <label for="date1">Please pick a date either for today or in the past</label>
+                            <br>
+                            <input type="date" id="date1" v-model="new_date" required>
+                            
                         </div>
                         <div class="textInput">
+                            <label>Please rate your overall mood</label>
+                            <br>
                             <input type="radio" id="mood_5" name="mood_rate" value="5" v-model="new_mood">
                             <label for="mood_5">5 (Awesome)</label>
                             <input type="radio" id="mood_4" name="mood_rate" value="4" v-model="new_mood">
@@ -108,12 +114,19 @@
 
                         </div>
                         <div class="textInput">
+                            <p>Add activities you participated in today: </p>
                             <div  v-for="activity in activities_list"> 
                                
                                 <label><input type="checkbox" name="activity" :value="activity" v-model="new_activities"> {{activity}}</label>
                             </div>
+                            <label>Add Activity</label>
+                            <input type="text" v-model="new_activity">
+                            <button v-on:click="addActivity">Add Activity</button>
                             Checked Activities: {{ new_activities }}
                             
+                        </div>
+                        <div>
+                            <textarea v-model="new_journal" placeholder="Write about your day here..."></textarea>
                         </div>
                     </div>
                     <button v-on:click="addEntry">Submit Content</button>
