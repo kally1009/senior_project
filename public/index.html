@@ -135,8 +135,10 @@
                             
                             
                         </div>
+                        <br>
                         <div>
-                            <textarea v-model="new_journal" placeholder="Write about your day here..."></textarea>
+                            <h4>Journal Entry</h4>
+                            <textarea v-model="new_journal" placeholder="Write about your day here..." class="journal-style"></textarea>
                         </div>
                     </div>
                     <button v-on:click="addEntry" class="primary-btn">Submit Content</button>
@@ -144,8 +146,13 @@
                     
                 </div>
                 <div v-if="page==='stats'">
-                    <h2>This is the stats page</h2>
-                
+                    <h2>Your Statistics</h2>
+                    
+
+                    <div class="chart-container">
+                        <canvas id="moodChart"></canvas>
+                    </div>
+                    
                 </div>
 
             </main>
@@ -156,7 +163,8 @@
         </div>
         
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="./chart.js"></script>
         <script type="module" src="app.js"></script>
         
     </body>

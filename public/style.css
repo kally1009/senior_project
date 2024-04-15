@@ -3,6 +3,17 @@
     src: url(assets/inter-font/Inter-VariableFont_slnt\,wght.ttf);
   }
 
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.chart-container{
+    width: 40rem;
+    padding: auto;
+}
+
 .wrapper {
     margin: 0 auto;
     width: 80%;
@@ -172,4 +183,14 @@ nav {
     font-family: interFont;
     color: white;
     border-radius: 10px;
+}
+
+.journal-style {
+    resize: none;
+    width: 80%;
+    margin: 10px 5px;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    height: 150px;
 }
