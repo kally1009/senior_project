@@ -22,6 +22,7 @@ Vue.createApp({
                 "work"
             ], 
             new_activity:"",
+            addNewActivity:false,
             new_date:"",
             new_mood:0,
             new_activities:[],
@@ -36,9 +37,17 @@ Vue.createApp({
 
     // need to add in validation
     methods: {
+        toggleAddActivity: function(){
+            if(this.addNewActivity == false){
+                this.addNewActivity = true;
+            }else{
+                this.addNewActivity = false;
+            }
+            
+        },
 
         addActivity: function(){
-            activities_list.push(new_activity); //maybe add an option to save even on server restart??
+            this.activities_list.push(this.new_activity) //maybe add an option to save even on server restart??
         },
 
         validateEntries: function(){
@@ -81,7 +90,7 @@ Vue.createApp({
                 date: this.new_date,
                 mood: this.new_mood,
                 activities: this.new_activities,
-                journals:[]
+                journals:this.new_journal
             };
 
             console.log(this.new_mood);

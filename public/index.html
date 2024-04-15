@@ -89,18 +89,22 @@
                     
                 </div>
                 <div v-if='page==="newEntry"'>
-                    <h2>Check-In</h2>
-                    <div class="inputHolder">
-                        <div class="textInput">
-                            
-                            <label for="date1">Please pick a date either for today or in the past</label>
-                            <br>
-                            <input type="date" id="date1" v-model="new_date" required>
-                            
-                        </div>
-                        <div class="textInput">
-                            <label>Please rate your overall mood</label>
-                            <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div  class="editNewForm">
+                        <h2 class="interFont">Check-In</h2>
+                            <div class="inputHolder">
+                                <div class="textInput">
+                                    
+                                    <label for="date1">Please pick a date either for today or in the past</label>
+                                    <br>
+                                    <input type="date" id="date1" v-model="new_date" required class="datePicker">
+                                    
+                                </div>
+                            <div class="textInput">
+                            <p class="p-label-style">Please rate your overall mood</p>
                             <input type="radio" id="mood_5" name="mood_rate" value="5" v-model="new_mood">
                             <label for="mood_5">5 (Awesome)</label>
                             <input type="radio" id="mood_4" name="mood_rate" value="4" v-model="new_mood">
@@ -119,32 +123,41 @@
                                
                                 <label><input type="checkbox" name="activity" :value="activity" v-model="new_activities"> {{activity}}</label>
                             </div>
-                            <label>Add Activity</label>
-                            <input type="text" v-model="new_activity">
-                            <button v-on:click="addActivity">Add Activity</button>
-                            Checked Activities: {{ new_activities }}
+                            <div class="addActivity-style">
+                            <p class="p-label-style">New Activity</p>
+                            <img src="assets/icons8-add-material-outlined/icons8-add-24.png" v-on:click="toggleAddActivity">
+                            </div>
+                            <div v-if="addNewActivity==true">
+                                <label>Add Activity</label>
+                                <input type="text" v-model="new_activity">
+                                <button v-on:click="addActivity">Add Activity</button>
+                            </div>
+                            
                             
                         </div>
                         <div>
                             <textarea v-model="new_journal" placeholder="Write about your day here..."></textarea>
                         </div>
                     </div>
-                    <button v-on:click="addEntry">Submit Content</button>
+                    <button v-on:click="addEntry" class="primary-btn">Submit Content</button>
+                    </div>
+                    
                 </div>
                 <div v-if="page==='stats'">
                     <h2>This is the stats page</h2>
-
+                
                 </div>
 
             </main>
 
             <footer class="wrapper"> <!-- Will need to reference where I got the icons somewhere. Maybe in the footer, or may have a seperate page, etc. Will figure that out. -->
-                Icons by <a href="https://unsplash.com/@anniespratt?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Annie Spratt</a> on <a href="https://unsplash.com/photos/green-leaf-hX_hf2lPpUU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-                Icons by <a href="https://unsplash.com/@bartzimny?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Bart Zimny</a> on <a href="https://unsplash.com/photos/shallow-photography-of-leaves-W5XTTLpk1-I?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+                
             </footer>
         </div>
         
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-        <script src="app.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+        <script type="module" src="app.js"></script>
+        
     </body>
 </html>

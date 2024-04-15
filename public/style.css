@@ -125,3 +125,51 @@ nav {
 .activity-list {
     display: inline-block;
 }
+
+.inputHolder {
+    font-family: interFont;
+    font-size: 14px;
+}
+
+.interFont {
+    font-family: interFont;
+}
+
+.datePicker {
+    padding: 5px;
+    margin: 10px 0px;
+}
+
+.textInput {
+    margin: 10px 0px;
+}
+
+.p-label-style {
+    margin: 5px;
+}
+
+.addActivity-style {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.editNewForm {
+    padding: 15px;
+    border-radius: 30px;
+    box-shadow: -0px 0px 20px 5px rgba(0,0,0,0.45),
+    25px 0px 20px -20px rgba(0,0,0,0.45),
+    0px 25px 20px -20px rgba(0,0,0,0.45),
+    -25px 0px 20px -20px rgba(0,0,0,0.45);
+}
+
+.primary-btn {
+    background-color: #25995C;
+    margin: 10px;
+    border: none;
+    padding: 10px 40px;
+    font-size: 15px;
+    font-family: interFont;
+    color: white;
+    border-radius: 10px;
+}

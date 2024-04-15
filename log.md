@@ -122,3 +122,13 @@
 ### 4/11/24
 * More CSS
 * Sketched out ideas for CSS on other web pages
+
+### 4/12/24
+* Finished up home page css
+
+### 4/13/24
+* Spent WAY too much time trying to figure out chart.js and to get it to work
+* importing other libraries on the front-end isn't working...
+
+### 4/14/24
+* CSS for edit/Add new entry page
