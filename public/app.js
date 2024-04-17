@@ -15,7 +15,7 @@ Vue.createApp({
             entries:[],
             activities_list:[
                 "school",
-                "relax",
+                "relaxing",
                 "sport",
                 "movies/tv",
                 "reading",
@@ -30,6 +30,7 @@ Vue.createApp({
             new_journal:"",
             journal_description:"",
             title:"",
+            stats:[]
 
 
 
@@ -118,6 +119,7 @@ Vue.createApp({
                     this.new_mood = "";
                     this.new_activities = [];
                     this.loadEntries();
+                    this.loadStats();
                     this.page = "home";
                 }
             });
@@ -130,6 +132,7 @@ Vue.createApp({
                 }
             }).then((res)=>{
                 this.loadEntries();
+                this.loadStats();
             });
         },
 
@@ -156,11 +159,12 @@ Vue.createApp({
                         alert(data.msg) //put something else here eventually
                     })
                 }else if(response.status == 200){
-                    this.date=""
+                    this.date="";
                     this.new_mood = 0;
-                    this.activities = [],
-                    this.page="home",
-                    this.loadEntries()
+                    this.activities = [];
+                    this.page="home";
+                    this.loadEntries();
+                    this.loadStats();
                     
                 }
             });
@@ -209,11 +213,37 @@ Vue.createApp({
             });
         },
 
+        loadStats: function(){
+            fetch(`${url}/stats`).then((res) => {
+                if (res.status == 200) {
+                    res.json().then((stats) => {
+                        this.stats = stats;
+                        console.log(this.stats);
+                    });
+                }
+            });
+        },
+
+        calculateStats: function(){
+            let usedActivities = [];
+            for(let i=0;i<this.entries.length; i++){
+                console.log(this.entries);
+                for(let j=0; j<this.entries[i].activities.length; j++){
+                    console.log(this.entries[i].activities)
+                    usedActivities.push(this.entries[i].activities[j]);
+                }
+            }
+            usedActivities.sort();
+            console.log(usedActivities);
+
+        }
+
 
     },
     created: function() {
         console.log("Mod Health!");
         this.loadEntries();
+        this.loadStats(); //moodEntries,moodCount,totalCount,moodFrequencies,moodMean,moodMedian
     }
 
 }).mount("#app");

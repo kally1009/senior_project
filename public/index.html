@@ -25,8 +25,6 @@
                         <button class="nav-btn" v-on:click = "page='newEntry'">Check-In</button>
                         
                         <button class="nav-btn" v-on:click = "page='stats'">Statistics</button>
-
-                        <button class="nav-btn" v-on:click = "page ='calendar'">Calendar</button>
                     </div>
                     <div class="nav-signin">
                         <img src="assets/user-profile-filled-svgrepo-com.svg" width="48">
@@ -147,7 +145,7 @@
                 </div>
                 <div v-if="page==='stats'">
                     <h2>Your Statistics</h2>
-                    
+                    <p>{{ calculateStats() }}</p>
 
                     <div class="chart-container">
                         <canvas id="moodChart"></canvas>

@@ -185,13 +185,87 @@ app.delete("/journals/:id",(req,res)=>{
 });
 
 app.get("/stats",async (req,res)=>{
-    //put args here to pass to the python script (if need args)
-    const spawn = require("child_process").spawn;
+    res.setHeader("Content-Type", "application/json");
+
+
+    let mood5query = {mood: 5};
+    let mood4query = {mood: 4};
+    let mood3query = {mood: 3};
+    let mood2query = {mood: 2};
+    let mood1query = {mood: 1};
+    try{
+
+        //mood counting/stats
+        let mood5 = await Entry.find(mood5query);
+        let mood5Count = mood5.length;
+        let mood4 = await Entry.find(mood4query);
+        let mood4Count = mood4.length;
+        let mood3 = await Entry.find(mood3query);
+        let mood3Count = mood3.length;
+        let mood2 = await Entry.find(mood2query);
+        let mood2Count = mood2.length;
+        let mood1 = await Entry.find(mood1query);
+        let mood1Count = mood1.length;
+        let totalCount = mood5Count+mood4Count+mood3Count+mood2Count+mood1Count;
+        let mean = ((mood5Count*5)+(mood4Count*4)+(mood3Count*3)+(mood2Count*2)+(mood1Count*1))/totalCount;
+
+        let lst=[];
+
+        for(let i=0; i<mood1Count;i++){
+            lst.push(1);
+        }
+        for(let i=0; i<mood2Count;i++){
+            lst.push(2);
+        }
+        for(let i=0; i<mood3Count;i++){
+            lst.push(3);
+        }
+
+        for(let i=0; i<mood4Count;i++){
+            lst.push(4);
+        }
+
+        for(let i=0; i<mood5Count;i++){
+            lst.push(5);
+        }
+
+        let median=0;
+
+        if(lst.length%2==0){
+            let index=lst.length/2;
+            let other=index+1;
+            median = Math.round(lst[index]+lst[other])/2;
+        }else{
+            let index = Math.round(lst.length/2);
+            median = lst[index];
+        }
+
+        let result ={
+            "moodEntries":[mood5,mood4,mood3,mood2,mood1],
+            "moodCount":[mood5Count,mood4Count,mood3Count,mood2Count,mood1Count],
+            "totalCount": totalCount,
+            "moodFrequencies" : [mood5Count/totalCount,mood4Count/totalCount,mood3Count/totalCount,mood2Count/totalCount,mood1Count/totalCount],
+            "moodMean": mean,
+            "moodMedian": median
+
+        };
+        console.log(result);
+        res.status(200).json(result);
+
+    } catch (error){
+        res.status(500).json(error);
+    }
+    
+    
+    
+    
+    //python attempt
+    /*const spawn = require("child_process").spawn;
     const pythonProcess = spawn('python',["./stats/main.py", arg1, arg2]);
     
     pythonProcess.stdout.on('data', (data) => {
         //do stuff here on the returned data
-    });
+    });*/
 })
 
 
