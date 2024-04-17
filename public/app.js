@@ -110,7 +110,7 @@ Vue.createApp({
                 console.log(new_entry);
                 console.log(res.status);
                 if(res.status==422){
-                    response.json().then(function(data){
+                    res.json().then(function(data){
                         console.log(data)
                     })
                 }
@@ -137,11 +137,12 @@ Vue.createApp({
         },
 
         saveEditEntry: function(){
-            var updated_body = {
-                _id:this.entry_id,
-                date: this.date,
-                mood: this.mood,
-                activities: this.activities,
+            let updated_body = {
+                _id: this. entry_id,
+                date: this.new_date,
+                mood: this.new_mood,
+                activities: this.new_activities,
+                
 
             };
             fetch(`${url}/entries/`+this.entry_id, {
@@ -150,30 +151,35 @@ Vue.createApp({
                     "Content-Type": "application/json"
 
                 },
-                body:JSON.stringify(updated_body)
+                body: JSON.stringify(updated_body)
 
-            }).then(function(response){
+            }).then((res)=>{
                 console.log(updated_body)
-                if(response.status==404){
-                    response.json().then(function(data){
+                if(res.status==404){
+                    res.json().then(function(data){
+                        console.log(data);
                         alert(data.msg) //put something else here eventually
                     })
-                }else if(response.status == 200){
-                    this.date="";
+                }else if(res.status == 200){
+                    console.log("updated")
+                    this.new_date="";
                     this.new_mood = 0;
-                    this.activities = [];
+                    this.new_activities = [];
                     this.page="home";
                     this.loadEntries();
                     this.loadStats();
                     
                 }
+                console.log(res.status)
+                
             });
         },
         editEntry: function(entry){
-            this.date = entry.date
-            this.mood = entry.mood
-            this.activities = entry.activities
-            this.entry_id = entry.entry_id
+            console.log("entry passed in",entry)
+            this.entry_id = entry._id
+            this.new_date = entry.date
+            this.new_mood = entry.mood
+            this.new_activities = entry.activities
             this.page="updateEntry"
     },
         getJournals: function(entry_id){
