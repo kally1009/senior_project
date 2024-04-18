@@ -91,8 +91,8 @@
                     <br>
                     <br>
                     <br>
-                    <div  class="editNewForm">
-                        <h2 class="interFont">Check-In</h2>
+                    <div class="editNewForm">
+                        <h2 class="interFont" id="checkinLabel">Check-In</h2>
                             <div class="inputHolder">
                                 <div class="textInput">
                                     
@@ -103,36 +103,46 @@
                                 </div>
                             <div class="textInput">
                             <p class="p-label-style">Please rate your overall mood</p>
-                            <input type="radio" id="mood_5" name="mood_rate" value="5" v-model="new_mood">
-                            <label for="mood_5">5 (Awesome)</label>
+                            <label>
+                                <input type="radio" id="mood_5" name="mood_rate" value="5" v-model="new_mood">
+                                <img src="assets/mood-icons/icons8-happy-24.png" alt="5 (awesome)">
+                            </label>
                             <br>
+                            <label>
                             <input type="radio" id="mood_4" name="mood_rate" value="4" v-model="new_mood">
-                            <label for="mood_4">4 (Good)</label>
+                            <img src="assets/mood-icons/icons8-smile-24.png" alt="4 (good)">
+                            </label>
                             <br>
-                            <input type="radio" id="mood_3" name="mood_rate" value="3" v-model="new_mood">
-                            <label for="mood_3">3 (Okay)</label>
+                            <label>
+                                <input type="radio" id="mood_3" name="mood_rate" value="3" v-model="new_mood">
+                                <img src="assets/mood-icons/icons8-boring-24.png" alt="3 (okay)">
+                            </label>
                             <br>
-                            <input type="radio" id="mood_2" name="mood_rate" value="2" v-model="new_mood">
-                            <label for="mood_2">2 (Not Okay)</label>
+                            <label>
+                                <input type="radio" id="mood_2" name="mood_rate" value="2" v-model="new_mood">
+                                <img src="assets/mood-icons/icons8-sad-24.png" alt="2 (sad)">
+                            </label>
                             <br>
-                            <input type="radio" id="mood_1" name="mood_rate" value="1" v-model="new_mood">
-                            <label for="mood_1">1 (Horrible)</label>
+                            <label>
+                                <input type="radio" id="mood_1" name="mood_rate" value="1" v-model="new_mood">
+                                <img src="assets/mood-icons/icons8-angry-24.png" alt="1 (horrible)">
+                            </label>
+                            
 
                         </div>
                         <div class="textInput">
-                            <p>Add activities you participated in today: </p>
+                            <p class="p-label-style">Add activities you participated in today: </p>
                             <div  v-for="activity in activities_list"> 
                                
-                                <label><input type="checkbox" name="activity" :value="activity" v-model="new_activities"> {{activity}}</label>
+                                <label class="container"><input type="checkbox" name="activity" :value="activity" v-model="new_activities"><span class="checkmark"></span> {{activity}}</label>
                             </div>
                             <div class="addActivity-style">
                             <p class="p-label-style">New Activity</p>
-                            <img src="assets/icons8-add-material-outlined/icons8-add-24.png" v-on:click="toggleAddActivity">
+                            <img src="assets/icons8-add-material-outlined/icons8-add-24.png" v-if="addNewActivity==false" v-on:click="toggleAddActivity">
                             </div>
                             <div v-if="addNewActivity==true">
-                                <label>Add Activity</label>
-                                <input type="text" v-model="new_activity">
-                                <button v-on:click="addActivity">Add Activity</button>
+                                <input class="input-style" type="text" v-model="new_activity">
+                                <button v-on:click="addActivity" class="secondary-btn">Add Activity</button>
                             </div>
                             
                             
@@ -155,32 +165,42 @@
                                     
                                     <label for="date1">Please pick a date either for today or in the past</label>
                                     <br>
-                                    <input type="date" id="date1" v-model="new_date" required class="datePicker">
+                                    <input type="date" id="date1" v-model="edit_date" required class="datePicker">
                                     
                                 </div>
                             <div class="textInput">
                             <p class="p-label-style">Please rate your overall mood</p>
-                            <input type="radio" id="mood_5" name="mood_rate" value="5" v-model="new_mood">
-                            <label for="mood_5">5 (Awesome)</label>
-                            <br class="spacing">
-                            <input type="radio" id="mood_4" name="mood_rate" value="4" v-model="new_mood">
-                            <label for="mood_4">4 (Good)</label>
-                            <br class="spacing">
-                            <input type="radio" id="mood_3" name="mood_rate" value="3" v-model="new_mood">
-                            <label for="mood_3">3 (Okay)</label>
-                            <br class="spacing">
-                            <input type="radio" id="mood_2" name="mood_rate" value="2" v-model="new_mood">
-                            <label for="mood_2">2 (Not Okay)</label>
-                            <br class="spacing">
-                            <input type="radio" id="mood_1" name="mood_rate" value="1" v-model="new_mood">
-                            <label for="mood_1">1 (Horrible)</label>
+                            <label>
+                                <input type="radio" id="mood_5" name="mood_rate" value="5" v-model="edit_mood">
+                                <img src="assets/mood-icons/icons8-happy-24.png" alt="5 (awesome)">
+                            </label>
+                            <br>
+                            <label>
+                            <input type="radio" id="mood_4" name="mood_rate" value="4" v-model="edit_mood">
+                            <img src="assets/mood-icons/icons8-smile-24.png" alt="4 (good)">
+                            </label>
+                            <br>
+                            <label>
+                                <input type="radio" id="mood_3" name="mood_rate" value="3" v-model="edit_mood">
+                                <img src="assets/mood-icons/icons8-boring-24.png" alt="3 (okay)">
+                            </label>
+                            <br>
+                            <label>
+                                <input type="radio" id="mood_2" name="mood_rate" value="2" v-model="edit_mood">
+                                <img src="assets/mood-icons/icons8-sad-24.png" alt="2 (sad)">
+                            </label>
+                            <br>
+                            <label>
+                                <input type="radio" id="mood_1" name="mood_rate" value="1" v-model="edit_mood">
+                                <img src="assets/mood-icons/icons8-angry-24.png" alt="1 (horrible)">
+                            </label>
 
                         </div>
                         <div class="textInput">
                             <p>Edit activities you participated in: </p>
                             <div  v-for="activity in activities_list"> 
                                
-                                <label><input type="checkbox" name="activity" :value="activity" v-model="new_activities"> {{activity}}</label>
+                                <label class="container"><input type="checkbox" name="activity" :value="activity" v-model="edit_activities"> {{activity}}</label>
                             </div>
                             <div class="addActivity-style">
                             <p class="p-label-style">New Activity</p>
@@ -255,7 +275,7 @@
                     </div>
                     <div>
                         <!--Activities and average mood score.-->
-                        
+
                     </div>
 
 

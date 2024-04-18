@@ -31,7 +31,10 @@ Vue.createApp({
             journal_description:"",
             title:"",
             stats:[],
-            activitiesCount: {}
+            activitiesCount: {},
+            edit_date:"",
+            edit_mood: 0,
+            edit_activities: [],
 
 
 
@@ -51,7 +54,10 @@ Vue.createApp({
         },
 
         addActivity: function(){
-            this.activities_list.push(this.new_activity) //maybe add an option to save even on server restart??
+            this.activities_list.push(this.new_activity);
+            this.new_activities.push(this.new_activity);
+            this.new_activity = ""
+            this.addNewActivity = false;
         },
 
         validateEntries: function(){
@@ -78,7 +84,7 @@ Vue.createApp({
                     res.json().then((entries) => {
                         this.entries = entries;
                         this.entries.sort(
-                            (d1,d2) => (d1.date < d2.date) ? 1: (d1.date > d2.date) ? -1: 0);
+                            (d1,d2) => (d1.date < d2.date) ? 1: (d1.date >= d2.date) ? -1: 0 );
                         console.log(this.entries);
                     });
                 }
@@ -120,6 +126,7 @@ Vue.createApp({
                     this.new_date = "";
                     this.new_mood = "";
                     this.new_activities = [];
+                    this.addActivity = false;
                     this.loadEntries();
                     this.loadStats();
                     this.page = "home";
@@ -141,9 +148,9 @@ Vue.createApp({
         saveEditEntry: function(){
             let updated_body = {
                 _id: this. entry_id,
-                date: this.new_date,
-                mood: this.new_mood,
-                activities: this.new_activities,
+                date: this.edit_date,
+                mood: this.edit_mood,
+                activities: this.edit_activities,
                 
 
             };
@@ -164,9 +171,9 @@ Vue.createApp({
                     })
                 }else if(res.status == 200){
                     console.log("updated")
-                    this.new_date="";
-                    this.new_mood = 0;
-                    this.new_activities = [];
+                    this.edit_date="";
+                    this.edit_mood = 0;
+                    this.edit_activities = [];
                     this.page="home";
                     this.loadEntries();
                     this.loadStats();
@@ -179,9 +186,9 @@ Vue.createApp({
         editEntry: function(entry){
             console.log("entry passed in",entry)
             this.entry_id = entry._id
-            this.new_date = entry.date
-            this.new_mood = entry.mood
-            this.new_activities = entry.activities
+            this.edit_date = entry.date
+            this.edit_mood = entry.mood
+            this.edit_activities = entry.activities
             this.page="updateEntry"
     },
         getJournals: function(entry_id){
