@@ -194,3 +194,28 @@ nav {
     background-color: #f8f8f8;
     height: 150px;
 }
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin: auto;
+  }
+  
+  td, th {
+    border: 1px solid #dfeff3;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dfeff3;
+  }
+
+.div-center {
+    margin: auto;
+    width: 90%;
+}
+
+.text-center {
+    text-align: center;
+}

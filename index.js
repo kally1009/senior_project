@@ -244,7 +244,7 @@ app.get("/stats",async (req,res)=>{
             "moodEntries":[mood5,mood4,mood3,mood2,mood1],
             "moodCount":[mood5Count,mood4Count,mood3Count,mood2Count,mood1Count],
             "totalCount": totalCount,
-            "moodFrequencies" : [mood5Count/totalCount,mood4Count/totalCount,mood3Count/totalCount,mood2Count/totalCount,mood1Count/totalCount],
+            "moodFrequencies" : [(mood5Count/totalCount).toFixed(2),(mood4Count/totalCount).toFixed(2),(mood3Count/totalCount).toFixed(2),(mood2Count/totalCount).toFixed(2),(mood1Count/totalCount).toFixed(2)],
             "moodMean": mean,
             "moodMedian": median
 

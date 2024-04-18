@@ -30,7 +30,9 @@ Vue.createApp({
             new_journal:"",
             journal_description:"",
             title:"",
-            stats:[]
+            stats:[],
+            activitiesCount: {}
+
 
 
 
@@ -229,6 +231,7 @@ Vue.createApp({
                 }
             });
         },
+        
 
         calculateStats: function(){
             let usedActivities = [];
@@ -239,10 +242,25 @@ Vue.createApp({
                     usedActivities.push(this.entries[i].activities[j]);
                 }
             }
-            usedActivities.sort();
+    
+                const counts = {};
+                usedActivities.forEach((value) => {
+                  if (!counts[value]) {
+                    counts[value] = 1;
+                  } else {
+                    counts[value]++;
+                  }
+                });
+
+            const sortedCounts = Object.fromEntries(
+                Object.entries(counts).sort((a, b) => b[1] - a[1]));
+            this.activitiesCount = sortedCounts;
             console.log(usedActivities);
+            console.log(counts);
+            console.log(sortedCounts);
 
         }
+
 
 
     },
