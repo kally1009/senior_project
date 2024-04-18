@@ -207,7 +207,7 @@ app.get("/stats",async (req,res)=>{
         let mood1 = await Entry.find(mood1query);
         let mood1Count = mood1.length;
         let totalCount = mood5Count+mood4Count+mood3Count+mood2Count+mood1Count;
-        let mean = ((mood5Count*5)+(mood4Count*4)+(mood3Count*3)+(mood2Count*2)+(mood1Count*1))/totalCount;
+        let mean = (((mood5Count*5)+(mood4Count*4)+(mood3Count*3)+(mood2Count*2)+(mood1Count*1))/totalCount).toFixed(1);
 
         let lst=[];
 

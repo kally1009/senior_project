@@ -200,7 +200,7 @@
                             <p>Edit activities you participated in: </p>
                             <div  v-for="activity in activities_list"> 
                                
-                                <label class="container"><input type="checkbox" name="activity" :value="activity" v-model="edit_activities"> {{activity}}</label>
+                                <label class="container"><input type="checkbox" name="activity" :value="activity" v-model="new_activities"><span class="checkmark"></span> {{activity}}</label>
                             </div>
                             <div class="addActivity-style">
                             <p class="p-label-style">New Activity</p>
@@ -226,6 +226,8 @@
                     <br>
 
                     <p>{{ calculateStats() }}</p>
+
+                    <!-- Put visual for the mean mood with coloring and faces in a circle-->
 
                     <div>
                         <div class="div-center">
