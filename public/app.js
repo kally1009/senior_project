@@ -1,7 +1,7 @@
 const url = "http://localhost:8080";
 
 
-Vue.createApp({
+var app = Vue.createApp({
 
     data: function() {
         return {
@@ -266,11 +266,61 @@ Vue.createApp({
             console.log(counts);
             console.log(sortedCounts);
 
-        }
+        },
+
+        renderChart: function(){
+            if (!this.$refs.moodChart) {
+                return;
+            }
+
+            this.$refs.moodChart.getContext("2d").reset();
+
+            const data = [
+                { team: 'Red Jaguars', score: 8 },
+                { mood: this.new_mood, frequency: 1} //would this work???
+            ];
+
+            new Chart(this.$refs.moodChart, {
+                type: 'bar',
+                options: {
+                animation: false,
+                plugins: {
+                    legend: {
+                    display: false,
+                    },
+                    tooltip: {
+                    enabled: false,
+                    },
+                },
+                },
+                data: {
+                labels: data.map((row) => row.mood),
+                datasets: [
+                    {
+                    label: 'Mood and Frequency',
+                    data: data.map((row) => row.frequency),
+                    backgroundColor: [
+                        'rgb(255, 0, 0)',
+                        'rgb(0, 0, 255)',
+                        'rgb(0, 255, 0)',
+                        'rgb(255, 87, 51)',
+                        'rgb(208, 51, 255)',
+                        'rgb(185, 185, 185)',
+                    ],
+                    },
+                ],
+                },
+            });
+        },
 
 
 
     },
+
+    updated: function(){
+        this.renderChart();
+    },
+
     created: function() {
         console.log("Mod Health!");
         this.loadEntries();
