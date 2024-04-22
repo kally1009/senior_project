@@ -1,5 +1,5 @@
 const express = require('express');
-const { Entry, SavedEntry } = require('./model');
+const { Entry, SavedEntry, Journal } = require('./model');
 const cors = require('cors');
 
 
@@ -45,8 +45,8 @@ app.post("/entries",async (req,res)=>{
         journal: req.body.journal,
 
     });
-    createdEntry.save().then(()=>{
-        res.status(201).send("created");
+    createdEntry.save().then((result)=>{
+        res.status(201).json({"id": result._id});
         console.log("created entry");
 
     }).catch((error)=>{
@@ -110,14 +110,40 @@ app.delete("/entries/:id",(req,res)=>{
 });
 
 
-app.post("/journals",(req,res)=>{
+app.post("/journals",async (req,res)=>{
+    res.setHeader("Content-Type", "application/json")
+    let newJournal = new Journal({
+        title: req.body.title || "",
+        body: req.body.body || "",
+        entry_id: req.body.entry_id || "",
+
+    });
+
+    newJournal.save().then((result)=>{
+        res.status(201).json({"id": result._id});
+        console.log("created journal");
+
+    }).catch((error)=>{
+        if (error.errors){
+            let errorMessages = {};
+            for(let e in error.errors){
+              errorMessages[e] = error.errors[e].message
+            }
+            res.status(422).json(errorMessages)
+          }else{
+            console.error("Error Occured while creating an mood entry:", error);
+        res.status(500).send("Server error");
+        };
+    })
+});
+
+
+/*app.post("/journals",(req,res)=>{
     res.setHeader("Content-Type","application/json");
     console.log("Creating a journal entry");
 
     let newJournal = {
-        title: req.body.title || "",
-        body: req.body.body || "",
-        entry_id: req.body.entry_id || "", //put an error here
+        
     };
     Entry.findByIdAndUpdate(
         req.body.entry_id,
@@ -137,7 +163,7 @@ app.post("/journals",(req,res)=>{
             }
         }
     );
-});
+});*/
 
 app.put("/journals/:id",(req,res)=>{
     res.setHeader("Content-Type", "application/json");

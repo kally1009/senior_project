@@ -74,9 +74,10 @@ const savedJournalSchema = new mongoose.Schema({
 );
 
 const Entry = mongoose.model('Entry',entrySchema);
+const Journal = mongoose.model('Journal', journalSchema);
 const SavedEntry = mongoose.model("SavedEntry", savedEntrySchema);
 const SavedJournal = mongoose.model("SavedJournal", savedJournalSchema);
 
 module.exports = {
-    Entry, SavedEntry
+    Entry, Journal, SavedEntry, SavedJournal
 }
