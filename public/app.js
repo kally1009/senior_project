@@ -5,7 +5,7 @@ var app = Vue.createApp({
 
     data: function() {
         return {
-            page: "home", //home (listed entries), update , newEntry, stats
+            page: "home",
             entry_id:"",
             errors: {},
             date:"",
@@ -36,6 +36,7 @@ var app = Vue.createApp({
             edit_mood: 0,
             edit_activities: [],
             activityList:[],
+            addNewJournal: false,
 
 
 
@@ -53,6 +54,13 @@ var app = Vue.createApp({
             }
             
         },
+        toggleAddJournal: function(){
+            if(this.addNewJournal==false){
+                this.addNewJournal = true;
+            }else{
+                this.addNewJournal = false;
+            }
+        },
 
         addActivity: function(){
             this.activities_list.push(this.new_activity);
@@ -60,6 +68,7 @@ var app = Vue.createApp({
             this.new_activity = ""
             this.addNewActivity = false;
         },
+
 
         validateEntries: function(){
             this.errors = {};
@@ -86,7 +95,7 @@ var app = Vue.createApp({
                         this.entries = entries;
                         this.entries.sort(
                             (d1,d2) => (d1.date < d2.date) ? 1: (d1.date >= d2.date) ? -1: 0 );
-                        console.log(this.entries);
+                        console.log("the entries", this.entries);
                     });
                 }
             });
@@ -101,7 +110,7 @@ var app = Vue.createApp({
                 date: this.new_date,
                 mood: this.new_mood,
                 activities: this.new_activities,
-                journals:this.new_journal
+                
             };
 
             console.log(this.new_mood);
@@ -119,11 +128,14 @@ var app = Vue.createApp({
                 console.log(new_entry);
                 console.log(res.status);
                 if(res.status==422){
-                    res.json().then(function(data){
-                        console.log(data)
-                    })
+                    res.json()
                 }
                 else if (res.status == 201 ) {
+                    res.json().then((data)=>{
+                        console.log(data);
+                        console.log(data.id);
+
+                    })
                     this.new_date = "";
                     this.new_mood = "";
                     this.new_activities = [];
@@ -132,7 +144,7 @@ var app = Vue.createApp({
                     this.loadStats();
                     this.page = "home";
                 }
-            });
+            })
         },
         deleteEntry: function(id){
             fetch(`${url}/entries/`+id, {
@@ -203,11 +215,11 @@ var app = Vue.createApp({
             })
         },
 
-        createJournal: function(entry_id){
+        createJournal: function(entry){
             var new_journal = {
-                entry_id: entry_id,
+                entry_id: entry._id,
                 title: this.title,
-                body:this.journal_description,
+                body:this.new_journal,
             }
             fetch(`${url}/journals`,{
                 method: "POST",
@@ -223,10 +235,11 @@ var app = Vue.createApp({
                     })
                 }else if(response.status == 201){
                     this.title="";
-                    this.journal_description="";
-                    this.getJournals(entry_id);
+                    this.new_journal="";
                 }
+                
             });
+            this.loadEntries();
         },
 
         loadStats: function(){
@@ -243,7 +256,7 @@ var app = Vue.createApp({
 
         calculateStats: function(){
             let usedActivities = [];
-            let activityList= [];
+            
             for(let i=0;i<this.entries.length; i++){
                 
                 for(let j=0; j<this.entries[i].activities.length; j++){
@@ -256,7 +269,7 @@ var app = Vue.createApp({
                 usedActivities.forEach((value) => {
                   if (!counts[value]) {
                     counts[value] = 1;
-                    activityList.append(value);
+                    
                   } else {
                     counts[value]++;
                   }
@@ -265,7 +278,7 @@ var app = Vue.createApp({
             const sortedCounts = Object.fromEntries(
                 Object.entries(counts).sort((a, b) => b[1] - a[1]));
             this.activitiesCount = sortedCounts;
-            this.activityList = activityList;
+            
             
 
         },
@@ -357,41 +370,6 @@ var app = Vue.createApp({
                 ],
                 },
             });
-
-            let activityData = [
-                { activity: '5 (Awesome)', frequency: this.stats.moodFrequencies[0]}
-            ];
-            
-            for(let j=0;j<this.activityList.length();j++){
-                
-            }
-
-            new Chart(this.$refs.activitiesChart, {
-                type: 'bar',
-                options: {
-                animation: false,
-                plugins: {
-                    legend: {
-                    display: false,
-                    },
-                    tooltip: {
-                    enabled: true,
-                    },
-                },
-                },
-                data: {
-                labels: activityData.map((row) => row.activity),
-                datasets: [
-                    {
-                    label: '',
-                    data: activityData.map((row) => row.frequency),
-                    backgroundColor: 'rgb(0,0,255)'
-                    },
-                ],
-                },
-            });
-
-
 
 
         },

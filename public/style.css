@@ -189,12 +189,22 @@ nav {
 
 .journal-style {
     resize: none;
+    margin: 10px 5px;
     width: 80%;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    border-color: transparent;
+    
+}
+.title-style {
+    resize: none;
+
     margin: 10px 5px;
     padding: 12px;
     border-radius: 4px;
     background-color: #f8f8f8;
-    height: 150px;
+    border-color: transparent;
 }
 
 table {
@@ -333,7 +343,7 @@ table {
     font-size:large;
     padding: 20px 18px;
     border-width: 5px;
-    margin-right: 15px;
+    
     
   }
 
@@ -374,4 +384,18 @@ table {
     text-align: right;
     margin-top: 10px;
 
+}
+
+.addJournal-style {
+    
+    display: none;
+    justify-content:left;
+    align-items: center;
+    
+
+}
+
+.p-journal {
+    margin-top: 10px;
+    margin-right: 5px;
 }

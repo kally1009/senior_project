@@ -74,11 +74,27 @@
                                         <div v-if="entry.journal.length>0">
                                             {{entry.journal}}
                                         </div>
+                                        <div class="addJournal-style">
+                                            <p class="p-label-style p-journal">Add Journal</p>
+                                            <img src="assets/icons8-add-material-outlined/icons8-add-24.png" v-on:click="toggleAddJournal">
+                                        </div>
+                                        
+                                        
+                                    
                                     </div>
                                     <div class="entry-edit">
                                         <img src="assets/icons8-edit-material-outlined/icons8-edit-24.png" v-on:click="editEntry(entry)">
                                         <img src="assets/icons8-delete-trash-material-outlined/icons8-delete-trash-24.png" v-on:click="deleteEntry(entry._id)">
                                     </div>
+                                </div>
+                                <div v-if="addNewJournal==true">
+                                    <br>
+                                    <h4>Journal Entry</h4>
+                                    <input type="text" v-model="title" class="title-style" placeholder="Title your journal...">
+                                    <br>
+                                    <textarea v-model="new_journal" placeholder="Write about your day here..." class="journal-style"></textarea>
+                                    <br>
+                                    <button v-on:click="createJournal(entry)" class="secondary-btn">Submit Journal</button>
                                 </div>
                             </div>
                             
@@ -141,19 +157,16 @@
                             <img src="assets/icons8-add-material-outlined/icons8-add-24.png" v-if="addNewActivity==false" v-on:click="toggleAddActivity">
                             </div>
                             <div v-if="addNewActivity==true">
-                                <input class="input-style" type="text" v-model="new_activity">
+                                <input class="input-style title-style" type="text" v-model="new_activity">
                                 <button v-on:click="addActivity" class="secondary-btn">Add Activity</button>
                             </div>
                             
                             
                         </div>
                         <br>
-                        <div>
-                            <h4>Journal Entry</h4>
-                            <textarea v-model="new_journal" placeholder="Write about your day here..." class="journal-style"></textarea>
-                        </div>
+                        
                     </div>
-                    <button v-on:click="addEntry" class="primary-btn">Submit Content</button>
+                    <button v-on:click="addEntry" class="primary-btn">Submit</button>
                     </div>
                     
                 </div>
@@ -208,7 +221,7 @@
                             </div>
                             <div v-if="addNewActivity==true">
                                 <label>Add Activity</label>
-                                <input type="text" v-model="new_activity">
+                                <input type="text" class="title-style" v-model="new_activity">
                                 <button v-on:click="addActivity">Add Activity</button>
                             </div>
                         
@@ -271,6 +284,17 @@
                     <br>
                     <br>
                     <br>
+                    
+                    <div class="chart-container">
+                        Bar Chart of Mood Frequencies
+                        <canvas ref="moodChart"></canvas>
+
+
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+
                     <div>
                         <!-- Activity Frequencies, Counts-->
                         <div class="div-center">
@@ -293,23 +317,14 @@
                           </table>
 
                     </div>
+                    <br>
+                    <br>
                     <div>
                         <!--Activities and average mood score.-->
 
                     </div>
 
-                    <br>
-                    <br>
-                    <br>
                     
-                    <div class="chart-container">
-                        Bar Chart of Mood Frequencies
-                        <canvas ref="moodChart"></canvas>
-
-                        Bar Chart of Activity Frequencies
-                        <canvas ref="activitiesChart"></canvas>
-
-                    </div>
                     
                 </div>
 
