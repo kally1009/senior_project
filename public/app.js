@@ -64,6 +64,7 @@ var app = Vue.createApp({
 
         addActivity: function(){
             this.activities_list.push(this.new_activity);
+            console.log("new activity", this.new_activity);
             this.new_activities.push(this.new_activity);
             this.new_activity = ""
             this.addNewActivity = false;

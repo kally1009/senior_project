@@ -154,7 +154,7 @@
                             </div>
                             <div class="addActivity-style">
                             <p class="p-label-style">New Activity</p>
-                            <img src="assets/icons8-add-material-outlined/icons8-add-24.png" v-if="addNewActivity==false" v-on:click="toggleAddActivity">
+                            <img src="assets/icons8-add-material-outlined/icons8-add-24.png" v-on:click="toggleAddActivity">
                             </div>
                             <div v-if="addNewActivity==true">
                                 <input class="input-style title-style" type="text" v-model="new_activity">
@@ -173,7 +173,7 @@
                 <div v-if="page==='updateEntry'">
                     <br>
                     <br>
-                    
+
                     <div  class="editNewForm">
                         <h2 class="interFont">Check-In</h2>
                             <div class="inputHolder">
@@ -225,7 +225,7 @@
                             <div v-if="addNewActivity==true">
                                 <label>Add Activity</label>
                                 <input type="text" class="title-style" v-model="new_activity">
-                                <button v-on:click="addActivity">Add Activity</button>
+                                <button v-on:click="addActivity" class="primary-btn">Add Activity</button>
                             </div>
                         
                         </div>
