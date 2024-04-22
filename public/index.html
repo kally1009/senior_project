@@ -220,16 +220,34 @@
 
                 </div>
                 <div v-if="page==='stats'" class="interFont">
-                    <br>
-                    <h2>Your Statistics</h2>
-                    <br>
-                    <br>
-
                     <p>{{ calculateStats() }}</p>
+                    <br>
+                    <div class="stats-overview">
+                        <h2>Your Statistics</h2>
+                        <div>
+                            <div v-if="stats.moodMean>4.9" class="mood-mean-style" class="awesomeColor" >{{ stats.moodMean }}</div>
+                            <div v-else-if="stats.moodMean > 3.9" class="mood-mean-style goodColor">{{ stats.moodMean }}</div>
+                            <div v-else-if="stats.moodMean > 2.9" class="mood-mean-style okayColor">{{ stats.moodMean }}</div>
+                            <div v-else-if="stats.moodMean > 1.9" class="mood-mean-style sadColor">{{ stats.moodMean }}</div>
+                            <div v-else class="mood-mean-style horribleColor">{{ stats.moodMean }}</div>
 
-                    <!-- Put visual for the mean mood with coloring and faces in a circle-->
+                        </div>
+
+                    </div>
+                    <h4 id="averageMood">Average Mood</h4>
+                    
+                    <br>
+                    <br>
 
                     <div>
+                        <div class="div-center">
+                            <canvas ref="lineMoodChart"></canvas>
+
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+
                         <div class="div-center">
                             <h3>Mood Counts and Frequencies</h3>
                             <br>
@@ -280,9 +298,17 @@
 
                     </div>
 
-
+                    <br>
+                    <br>
+                    <br>
+                    
                     <div class="chart-container">
+                        Bar Chart of Mood Frequencies
                         <canvas ref="moodChart"></canvas>
+
+                        Bar Chart of Activity Frequencies
+                        <canvas ref="activitiesChart"></canvas>
+
                     </div>
                     
                 </div>

@@ -35,6 +35,7 @@ var app = Vue.createApp({
             edit_date:"",
             edit_mood: 0,
             edit_activities: [],
+            activityList:[],
 
 
 
@@ -242,10 +243,11 @@ var app = Vue.createApp({
 
         calculateStats: function(){
             let usedActivities = [];
+            let activityList= [];
             for(let i=0;i<this.entries.length; i++){
-                console.log(this.entries);
+                
                 for(let j=0; j<this.entries[i].activities.length; j++){
-                    console.log(this.entries[i].activities)
+                   
                     usedActivities.push(this.entries[i].activities[j]);
                 }
             }
@@ -254,6 +256,7 @@ var app = Vue.createApp({
                 usedActivities.forEach((value) => {
                   if (!counts[value]) {
                     counts[value] = 1;
+                    activityList.append(value);
                   } else {
                     counts[value]++;
                   }
@@ -262,22 +265,65 @@ var app = Vue.createApp({
             const sortedCounts = Object.fromEntries(
                 Object.entries(counts).sort((a, b) => b[1] - a[1]));
             this.activitiesCount = sortedCounts;
-            console.log(usedActivities);
-            console.log(counts);
-            console.log(sortedCounts);
+            this.activityList = activityList;
+            
 
         },
 
         renderChart: function(){
-            if (!this.$refs.moodChart) {
+            
+            if (!this.$refs.moodChart && !this.$refs.lineMoodChart) {
                 return;
             }
 
+            this.$refs.lineMoodChart.getContext("2d").reset();
+
             this.$refs.moodChart.getContext("2d").reset();
 
-            const data = [
-                { team: 'Red Jaguars', score: 8 },
-                { mood: this.new_mood, frequency: 1} //would this work???
+            let dateData = [];
+            let dailyMoodData = [];
+            for(let i=0;i<this.entries.length;i++){
+                dailyMoodData.push(this.entries[i].mood);
+                dateData.push(this.entries[i].date);
+            }
+            dateData.reverse();
+            dailyMoodData.reverse();
+
+            const ctx = this.$refs.lineMoodChart;
+            new Chart(this.$refs.lineMoodChart, {
+                type: 'line',
+                options: {
+                    animation: false,
+                plugins: {
+                    legend: {
+                    display: false,
+                    },
+                    tooltip: {
+                    enabled: true,
+                    },
+                },
+                },
+                data:{
+                    labels: dateData,
+                datasets: [
+                    {
+                    label: 'Daily Moods',
+                    data: dailyMoodData,
+                    fill: false,
+                    borderColor: 'rgb(66, 203, 245)',
+                    tension: 0.1
+                    },
+                ],
+                }
+            });
+
+
+            const moodData = [
+                { mood: '5 (Awesome)', frequency: this.stats.moodFrequencies[0]},
+                { mood: '4 (Good)', frequency: this.stats.moodFrequencies[1]},
+                {mood: '3 (Okay)', frequency: this.stats.moodFrequencies[2]},
+                {mood: '2 (Not Good)', frequency: this.stats.moodFrequencies[3]},
+                {mood: '1 (Horrible)', frequency: this.stats.moodFrequencies[4]},
             ];
 
             new Chart(this.$refs.moodChart, {
@@ -289,28 +335,65 @@ var app = Vue.createApp({
                     display: false,
                     },
                     tooltip: {
-                    enabled: false,
+                    enabled: true,
                     },
                 },
                 },
                 data: {
-                labels: data.map((row) => row.mood),
+                labels: moodData.map((row) => row.mood),
                 datasets: [
                     {
-                    label: 'Mood and Frequency',
-                    data: data.map((row) => row.frequency),
+                    label: '',
+                    data: moodData.map((row) => row.frequency),
                     backgroundColor: [
+                        '#25995C',
+                        '#92eb34',
+                        'rgb(255, 255, 0)',
+                        '#eb9c34',
                         'rgb(255, 0, 0)',
-                        'rgb(0, 0, 255)',
-                        'rgb(0, 255, 0)',
-                        'rgb(255, 87, 51)',
-                        'rgb(208, 51, 255)',
-                        'rgb(185, 185, 185)',
+                        
                     ],
                     },
                 ],
                 },
             });
+
+            let activityData = [
+                { activity: '5 (Awesome)', frequency: this.stats.moodFrequencies[0]}
+            ];
+            
+            for(let j=0;j<this.activityList.length();j++){
+                
+            }
+
+            new Chart(this.$refs.activitiesChart, {
+                type: 'bar',
+                options: {
+                animation: false,
+                plugins: {
+                    legend: {
+                    display: false,
+                    },
+                    tooltip: {
+                    enabled: true,
+                    },
+                },
+                },
+                data: {
+                labels: activityData.map((row) => row.activity),
+                datasets: [
+                    {
+                    label: '',
+                    data: activityData.map((row) => row.frequency),
+                    backgroundColor: 'rgb(0,0,255)'
+                    },
+                ],
+                },
+            });
+
+
+
+
         },
 
 
