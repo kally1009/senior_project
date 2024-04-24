@@ -65,8 +65,7 @@ var app = Vue.createApp({
         addActivity: function(){
             this.activities_list.push(this.new_activity);
             console.log("new activity", this.new_activity);
-            this.new_activities.push(this.new_activity);
-            this.new_activity = ""
+            this.new_activity = "";
             this.addNewActivity = false;
         },
 
@@ -90,6 +89,7 @@ var app = Vue.createApp({
         },
 
         loadEntries: function() {
+            this.new_activity = "";
             fetch(`${url}/entries`).then((res) => {
                 if (res.status == 200) {
                     res.json().then((entries) => {
@@ -140,6 +140,7 @@ var app = Vue.createApp({
                     this.new_date = "";
                     this.new_mood = "";
                     this.new_activities = [];
+                    this.new_activity=""
                     this.addActivity = false;
                     this.loadEntries();
                     this.loadStats();
