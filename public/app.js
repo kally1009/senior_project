@@ -37,6 +37,7 @@ var app = Vue.createApp({
             edit_activities: [],
             activityList:[],
             addNewJournal: false,
+            activitiesAverageMood: {},
 
 
 
@@ -64,7 +65,6 @@ var app = Vue.createApp({
 
         addActivity: function(){
             this.activities_list.push(this.new_activity);
-            console.log("new activity", this.new_activity);
             this.new_activity = "";
             this.addNewActivity = false;
         },
@@ -96,7 +96,6 @@ var app = Vue.createApp({
                         this.entries = entries;
                         this.entries.sort(
                             (d1,d2) => (d1.date < d2.date) ? 1: (d1.date >= d2.date) ? -1: 0 );
-                        console.log("the entries", this.entries);
                     });
                 }
             });
@@ -114,9 +113,6 @@ var app = Vue.createApp({
                 
             };
 
-            console.log(this.new_mood);
-            console.log(this.new_activities);
-            console.log(this.new_date);
     
             fetch(`${url}/entries`, {
                 method: "POST",
@@ -126,12 +122,10 @@ var app = Vue.createApp({
                 body: JSON.stringify(new_entry),
                 
             }).then((res) => {
-                console.log(new_entry);
-                console.log(res.status);
                 if(res.status==422){
                     res.json()
                 }
-                else if (res.status == 201 ) {
+                else if (res.status == 201 ) { //fix this here?
                     res.json().then((data)=>{
                         console.log(data);
                         console.log(data.id);
@@ -178,10 +172,9 @@ var app = Vue.createApp({
                 body: JSON.stringify(updated_body)
 
             }).then((res)=>{
-                console.log(updated_body)
                 if(res.status==404){
                     res.json().then(function(data){
-                        console.log(data);
+                        
                         alert(data.msg) //put something else here eventually
                     })
                 }else if(res.status == 200){
@@ -199,7 +192,7 @@ var app = Vue.createApp({
             });
         },
         editEntry: function(entry){
-            console.log("entry passed in",entry)
+            
             this.entry_id = entry._id
             this.edit_date = entry.date
             this.edit_mood = entry.mood
@@ -249,7 +242,7 @@ var app = Vue.createApp({
                 if (res.status == 200) {
                     res.json().then((stats) => {
                         this.stats = stats;
-                        console.log(this.stats);
+                        
                     });
                 }
             });
@@ -258,15 +251,25 @@ var app = Vue.createApp({
 
         calculateStats: function(){
             let usedActivities = [];
+            let activitesMood = {}; // activity : []list of moods
             
             for(let i=0;i<this.entries.length; i++){
                 
                 for(let j=0; j<this.entries[i].activities.length; j++){
                    
-                    usedActivities.push(this.entries[i].activities[j]);
+                    let activity = this.entries[i].activities[j];
+                    usedActivities.push(activity);
+                    if(!activitesMood[activity]){
+                        activitesMood[activity] = [this.entries[i].mood];
+                       
+                    }else{
+                        activitesMood[activity].push(this.entries[i].mood);
+                       
+                    }
                 }
             }
-    
+
+            //This code here was from an article
                 const counts = {};
                 usedActivities.forEach((value) => {
                   if (!counts[value]) {
@@ -280,6 +283,25 @@ var app = Vue.createApp({
             const sortedCounts = Object.fromEntries(
                 Object.entries(counts).sort((a, b) => b[1] - a[1]));
             this.activitiesCount = sortedCounts;
+            
+
+            //figuring out the average mood for each activity
+            let activitiesAverageMood = {}
+            for(const activity in activitesMood){
+                let moodlst = activitesMood[activity];
+                let sum=0;
+                for(let i=0;i<moodlst.length;i++){
+                    sum+=moodlst[i]
+                }
+                let average = (sum/moodlst.length).toFixed(2);
+                
+                activitiesAverageMood[activity] = average;
+
+            }
+            const sortedActivityFrequencies = Object.fromEntries(
+                Object.entries(activitiesAverageMood).sort((a, b) => b[1] - a[1]));
+            this.activitiesAverageMood = sortedActivityFrequencies;
+            
             
             
 
@@ -376,7 +398,7 @@ var app = Vue.createApp({
             let activityFrequencies=[];
             let activityList = [];
             for(const activity in this.activitiesCount){
-                console.log(`${activity} : ${this.activitiesCount[activity]}`);
+               
                 let num = this.activitiesCount[activity];
                 let freq = (num/this.stats.totalCount).toFixed(2);
                 activityFrequencies.push(freq);
@@ -404,7 +426,7 @@ var app = Vue.createApp({
                     label: '',
                     data: activityFrequencies,
                     backgroundColor: [
-                        '#6488ea',
+                        '#66a4d4',
                         
                         
                     ],
@@ -415,8 +437,43 @@ var app = Vue.createApp({
 
             // Average Mood Rating by Activity -- Score
             // use average mood mapped to each activity.
-            
+            // calculate average mood score based on activity. Put in bar plot. Order from least to greatest. 
 
+            let activitiesAverageLabels = [];
+            let activitiesAverageMood = [];
+
+            for(const activity in this.activitiesAverageMood){
+                activitiesAverageLabels.push(activity);
+                activitiesAverageMood.push(this.activitiesAverageMood[activity]);
+            }
+
+            new Chart(this.$refs.activityAverageMoodChart, {
+                type: 'bar',
+                options: {
+                animation: false,
+                plugins: {
+                    legend: {
+                    display: false,
+                    },
+                    tooltip: {
+                    enabled: true,
+                    },
+                },
+                },
+                data: {
+                labels: activitiesAverageLabels,
+                datasets: [
+                    {
+                    label: '',
+                    data: activitiesAverageMood,
+                    backgroundColor: [
+                        '#abdaed',
+                    ],
+                    },
+                ],
+                },
+            });
+            
 
         },
 
@@ -431,7 +488,7 @@ var app = Vue.createApp({
     created: function() {
         console.log("Mod Health!");
         this.loadEntries();
-        this.loadStats(); //moodEntries,moodCount,totalCount,moodFrequencies,moodMean,moodMedian
+        this.loadStats(); 
     }
 
 }).mount("#app");
