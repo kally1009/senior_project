@@ -304,7 +304,7 @@ var app = Vue.createApp({
             dateData.reverse();
             dailyMoodData.reverse();
 
-            const ctx = this.$refs.lineMoodChart;
+            
             new Chart(this.$refs.lineMoodChart, {
                 type: 'line',
                 options: {
@@ -326,7 +326,7 @@ var app = Vue.createApp({
                     data: dailyMoodData,
                     fill: false,
                     borderColor: 'rgb(66, 203, 245)',
-                    tension: 0.1
+                    tension: 0
                     },
                 ],
                 }
@@ -372,6 +372,50 @@ var app = Vue.createApp({
                 ],
                 },
             });
+
+            let activityFrequencies=[];
+            let activityList = [];
+            for(const activity in this.activitiesCount){
+                console.log(`${activity} : ${this.activitiesCount[activity]}`);
+                let num = this.activitiesCount[activity];
+                let freq = (num/this.stats.totalCount).toFixed(2);
+                activityFrequencies.push(freq);
+                activityList.push(activity);
+
+            }
+
+            new Chart(this.$refs.activityChart, {
+                type: 'bar',
+                options: {
+                animation: false,
+                plugins: {
+                    legend: {
+                    display: false,
+                    },
+                    tooltip: {
+                    enabled: true,
+                    },
+                },
+                },
+                data: {
+                labels: activityList,
+                datasets: [
+                    {
+                    label: '',
+                    data: activityFrequencies,
+                    backgroundColor: [
+                        '#6488ea',
+                        
+                        
+                    ],
+                    },
+                ],
+                },
+            });
+
+            // Average Mood Rating by Activity -- Score
+            // use average mood mapped to each activity.
+            
 
 
         },

@@ -132,3 +132,23 @@
 
 ### 4/14/24
 * CSS for edit/Add new entry page
+
+### ...
+
+### 4/19/24
+* CSS and Styling
+
+### 4/20/24
+* CSS and Styling
+
+### 4/22/24
+* Tried to get the journal part working
+* Added more CSS and styling
+* Fixed other bugs
+* Looked at Heroku Hosting
+
+### 4/23/24
+* Worked on project defense
+
+### 4/24/24
+* Fixed the adding a custom activity function
