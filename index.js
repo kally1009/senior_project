@@ -1,5 +1,5 @@
 const express = require('express');
-const { Entry, SavedEntry, Journal } = require('./model');
+const { Entry, SavedEntry } = require('./model');
 const cors = require('cors');
 
 

@@ -187,16 +187,7 @@ nav {
     border-radius: 10px;
 }
 
-.journal-style {
-    resize: none;
-    margin: 10px 5px;
-    width: 80%;
-    padding: 12px;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    border-color: transparent;
-    
-}
+
 .title-style {
     resize: none;
 
@@ -384,18 +375,4 @@ table {
     text-align: right;
     margin-top: 10px;
 
-}
-
-.addJournal-style {
-    
-    display: none;
-    justify-content:left;
-    align-items: center;
-    
-
-}
-
-.p-journal {
-    margin-top: 10px;
-    margin-right: 5px;
 }

@@ -71,13 +71,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div v-if="entry.journal.length>0">
-                                            {{entry.journal}}
-                                        </div>
-                                        <div class="addJournal-style">
-                                            <p class="p-label-style p-journal">Add Journal</p>
-                                            <img src="assets/icons8-add-material-outlined/icons8-add-24.png" v-on:click="toggleAddJournal">
-                                        </div>
+                                        
                                         
                                         
                                     
@@ -87,15 +81,7 @@
                                         <img src="assets/icons8-delete-trash-material-outlined/icons8-delete-trash-24.png" v-on:click="deleteEntry(entry._id)">
                                     </div>
                                 </div>
-                                <div v-if="addNewJournal==true">
-                                    <br>
-                                    <h4>Journal Entry</h4>
-                                    <input type="text" v-model="title" class="title-style" placeholder="Title your journal...">
-                                    <br>
-                                    <textarea v-model="new_journal" placeholder="Write about your day here..." class="journal-style"></textarea>
-                                    <br>
-                                    <button v-on:click="createJournal(entry)" class="secondary-btn">Submit Journal</button>
-                                </div>
+                                
                             </div>
                             
                         </li>
@@ -336,6 +322,8 @@
                         Average Mood Rating by Activity
                         <canvas ref="activityAverageMoodChart"></canvas>
                     </div>
+                    <br>
+                    
 
                     
                     

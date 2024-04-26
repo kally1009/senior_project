@@ -6,6 +6,8 @@ const dbPassword = process.env.DB_PASSWORD;
 const mongoose = require("mongoose");
 mongoose.connect(`mongodb+srv://${dbUsername}:${dbPassword}@cluster0.7bo4ldm.mongodb.net/?retryWrites=true&w=majority`);
 
+
+// currently not using the journalSchema
 const journalSchema = new mongoose.Schema({
     title:{
         type: String
@@ -21,6 +23,8 @@ const journalSchema = new mongoose.Schema({
 
 },
 {timestamps: true});
+
+
 
 const entrySchema = new mongoose.Schema({
     date:{
@@ -56,28 +60,12 @@ const savedEntrySchema = new mongoose.Schema({
 },
 {timestamps: true});
 
-const savedJournalSchema = new mongoose.Schema({
-    title:{
-        type: String
-    },
-    body:{
-        type: String,
-        required: [true, "Please provide a body"]
-    },
-    entry_id:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Entry"
-    }
 
-},
-{timestamps: true}
-);
 
 const Entry = mongoose.model('Entry',entrySchema);
 const Journal = mongoose.model('Journal', journalSchema);
 const SavedEntry = mongoose.model("SavedEntry", savedEntrySchema);
-const SavedJournal = mongoose.model("SavedJournal", savedJournalSchema);
 
 module.exports = {
-    Entry, Journal, SavedEntry, SavedJournal
+    Entry, SavedEntry
 }

@@ -45,7 +45,7 @@ var app = Vue.createApp({
         };
     },
 
-    // need to add in validation
+    // need to add in user-facing validation
     methods: {
         toggleAddActivity: function(){
             if(this.addNewActivity == false){
@@ -55,15 +55,9 @@ var app = Vue.createApp({
             }
             
         },
-        toggleAddJournal: function(){
-            if(this.addNewJournal==false){
-                this.addNewJournal = true;
-            }else{
-                this.addNewJournal = false;
-            }
-        },
 
         addActivity: function(){
+            console.log(this.new_activity)
             this.activities_list.push(this.new_activity);
             this.new_activity = "";
             this.addNewActivity = false;
@@ -100,6 +94,7 @@ var app = Vue.createApp({
                 }
             });
         },
+
         addEntry: function() {
 
             if(!this.validateEntries()){
@@ -125,20 +120,19 @@ var app = Vue.createApp({
                 if(res.status==422){
                     res.json()
                 }
-                else if (res.status == 201 ) { //fix this here?
+                else if (res.status == 201 ) {
                     res.json().then((data)=>{
                         console.log(data);
-                        console.log(data.id);
-
-                    })
-                    this.new_date = "";
-                    this.new_mood = "";
-                    this.new_activities = [];
-                    this.new_activity=""
-                    this.addActivity = false;
-                    this.loadEntries();
-                    this.loadStats();
-                    this.page = "home";
+                        this.new_date = "";
+                        this.new_mood = "";
+                        this.new_activities = [];
+                        this.new_activity=""
+                        this.addActivity = false;
+                        this.loadEntries();
+                        this.loadStats();
+                        this.page = "home";
+                    });
+                    
                 }
             })
         },
@@ -199,6 +193,10 @@ var app = Vue.createApp({
             this.edit_activities = entry.activities
             this.page="updateEntry"
     },
+        
+
+
+        // function not currently used
         getJournals: function(entry_id){
             fetch(`${url}/entries/${entry_id}`).then(function(response){
                 response.json().then(function(data){
@@ -210,6 +208,7 @@ var app = Vue.createApp({
             })
         },
 
+        // function not currently used
         createJournal: function(entry){
             var new_journal = {
                 entry_id: entry._id,
@@ -254,9 +253,7 @@ var app = Vue.createApp({
             let activitesMood = {}; // activity : []list of moods
             
             for(let i=0;i<this.entries.length; i++){
-                
                 for(let j=0; j<this.entries[i].activities.length; j++){
-                   
                     let activity = this.entries[i].activities[j];
                     usedActivities.push(activity);
                     if(!activitesMood[activity]){
@@ -269,7 +266,7 @@ var app = Vue.createApp({
                 }
             }
 
-            //This code here was from an article
+            //This code here was from counting duplicate values in javascript arrays (article)
                 const counts = {};
                 usedActivities.forEach((value) => {
                   if (!counts[value]) {
@@ -280,6 +277,7 @@ var app = Vue.createApp({
                   }
                 });
 
+            //Code from How to Sort Object Property By Values in JavaScript (article)
             const sortedCounts = Object.fromEntries(
                 Object.entries(counts).sort((a, b) => b[1] - a[1]));
             this.activitiesCount = sortedCounts;
@@ -298,6 +296,7 @@ var app = Vue.createApp({
                 activitiesAverageMood[activity] = average;
 
             }
+            //structure based off of one above
             const sortedActivityFrequencies = Object.fromEntries(
                 Object.entries(activitiesAverageMood).sort((a, b) => b[1] - a[1]));
             this.activitiesAverageMood = sortedActivityFrequencies;
@@ -309,13 +308,17 @@ var app = Vue.createApp({
 
         renderChart: function(){
             
-            if (!this.$refs.moodChart && !this.$refs.lineMoodChart) {
+            if (!this.$refs.moodChart && !this.$refs.lineMoodChart && !this.$refs.activityChart && !this.$refs.activityAverageMoodChart) {
                 return;
             }
 
             this.$refs.lineMoodChart.getContext("2d").reset();
 
             this.$refs.moodChart.getContext("2d").reset();
+
+            this.$refs.activityChart.getContext("2d").reset();
+
+            this.$refs.activityAverageMoodChart.getContext("2d").reset();
 
             let dateData = [];
             let dailyMoodData = [];
@@ -326,7 +329,7 @@ var app = Vue.createApp({
             dateData.reverse();
             dailyMoodData.reverse();
 
-            
+            // timeline of mood
             new Chart(this.$refs.lineMoodChart, {
                 type: 'line',
                 options: {
@@ -354,6 +357,7 @@ var app = Vue.createApp({
                 }
             });
 
+            //mood frequencies
 
             const moodData = [
                 { mood: '5 (Awesome)', frequency: this.stats.moodFrequencies[0]},
@@ -394,6 +398,8 @@ var app = Vue.createApp({
                 ],
                 },
             });
+
+            //activity frequencies
 
             let activityFrequencies=[];
             let activityList = [];
@@ -436,8 +442,6 @@ var app = Vue.createApp({
             });
 
             // Average Mood Rating by Activity -- Score
-            // use average mood mapped to each activity.
-            // calculate average mood score based on activity. Put in bar plot. Order from least to greatest. 
 
             let activitiesAverageLabels = [];
             let activitiesAverageMood = [];
