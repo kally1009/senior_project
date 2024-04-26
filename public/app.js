@@ -306,6 +306,7 @@ var app = Vue.createApp({
 
         },
 
+        //DJ helped me figure this part out
         renderChart: function(){
             
             if (!this.$refs.moodChart && !this.$refs.lineMoodChart && !this.$refs.activityChart && !this.$refs.activityAverageMoodChart) {

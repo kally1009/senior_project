@@ -21,7 +21,7 @@ moodQuery = {"mood":5}
 
 # Fields with values as 1 will
 # only appear in the result
-x = entryCol.find(moodQuery)
+x = entryCol.find()
 
 for data in x:
 	print(data)

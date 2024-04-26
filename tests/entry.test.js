@@ -66,6 +66,3 @@ beforeEach(async () => {
   });
 
 
-// unit tests with describe and it. 
-// use postman to also do some manuel testing
-

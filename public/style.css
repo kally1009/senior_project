@@ -284,6 +284,7 @@ table {
     width: 0;
   }
   
+  /* Section with the checkmark was from W3Schools*/
   .checkmark {
     position: absolute;
     top: 0;
@@ -315,7 +316,7 @@ table {
     display: block;
   }
   
-  /* Style the checkmark/indicator */
+  /* Style the checkmark/indicator - From W3Schools*/
   .container .checkmark:after {
     left: 7px;
     top: 2px;
@@ -376,3 +377,4 @@ table {
     margin-top: 10px;
 
 }
+
