@@ -133,10 +133,13 @@
 ### 4/14/24
 * CSS for edit/Add new entry page
 
-### ...
+### ... 
+* Made more progress. Forgot to say what I did exactly.
 
 ### 4/19/24
 * CSS and Styling
+* Chartjs working
+* Adding in charts and stats
 
 ### 4/20/24
 * CSS and Styling
@@ -152,3 +155,9 @@
 
 ### 4/24/24
 * Fixed the adding a custom activity function
+* Worked on Project Defense
+* Tweaked more CSS
+
+### 4/25/24
+* Finished Project Defense
+* Tweaked a few more CSS items
