@@ -11,29 +11,21 @@ Attributes:
 - journal (journalSchema)
 - Activity Tag (list of strings)
 
-###### Journal
-Attributes:
-- title (string)
-- description (string)
-- entry_id (Object Id)
 #
 Rest Endpoints
 |Name | Method | Path |
 |-----|--------|------|
 | getEntries | GET | /entries |
-| getJournal | GET | /entries/id
 | createEntry | POST | /entries |
-| createJournal | POST | /journals |
 | saveEditEntries | PUT | /entries/id |
-| saveEditJournal | PUT | /journals/id |
 | deleteEntry | DELETE | /entries/id |
-| deleteEntry | DELETE | /journals/id |
+| getStats | GET | /stats |
+
 
 #
 Additional Notes:
 - Statistics Page(GET date(s), mood, activity tags from getEntries)
-- Calendar Page (GET date and mood from getEntries)
 - Testing with Jest and Supertest
 - Frontend Built with Vuejs
-- If time, want to add user accounts and authentication.
+- Backend Built with Nodejs, Expressjs, using Mongoose with MongoDB
 

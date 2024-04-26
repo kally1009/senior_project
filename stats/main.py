@@ -3,6 +3,10 @@ import pymongo
 import os
 from dotenv import load_dotenv
 
+
+### ENDED UP NOT GOING THIS ROUTE WITH PYTHON
+
+
 load_dotenv()
 
 dbUsername = os.getenv('DB_USERNAME')
