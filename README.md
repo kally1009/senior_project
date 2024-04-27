@@ -29,3 +29,9 @@ Additional Notes:
 - Frontend Built with Vuejs
 - Backend Built with Nodejs, Expressjs, using Mongoose with MongoDB
 
+## Images
+![Alt text](public/assets/showcaseRegistrationPhoto.png)
+
+![Alt text](public/assets/checkin.png)
+
+
